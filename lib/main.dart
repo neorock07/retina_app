@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+import 'routes/routes.dart';
 import 'pages/splash_screen.dart';
 
 void main() {
@@ -19,18 +19,20 @@ class MyApp extends StatelessWidget {
       designSize: const Size(390, 640),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (_, build){
+      builder: (_, child){
         return GetMaterialApp(
           title: 'RETINA APP',
+          onGenerateRoute: Routers.generatedRoute,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
               seedColor: const Color.fromRGBO(17, 17, 16, 1.0)
               )
-          )
+          ),
+          home: child,
         );
       },
-      child: SplashScreen() ,
+      child: const SplashScreen() ,
     );
   }
 }
