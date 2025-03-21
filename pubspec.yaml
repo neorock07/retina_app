@@ -68,6 +68,8 @@ flutter:
     - assets/image/aset_bg_2 1.png
     - assets/image/aset_bg_2 2.png
     - assets/image/logo.png
+    - assets/image/aset_bg_round_kanan.png
+    - assets/image/logo_retina_datar_white.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -81,14 +83,17 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/font/poppins.ttf
+    - family: Hammersmith
+      fonts:
+        - asset: assets/font/hammersmith.ttf
+
   #   - family: Trajan Pro
   #     fonts:
+  
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
