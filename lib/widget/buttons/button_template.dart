@@ -14,7 +14,7 @@ Widget ButtonTemplate(BuildContext context, void Function() onTap,
       onTap: () {
         onTap();
       },
-      hoverColor: Color.fromARGB(255, 255, 255, 255),
+      hoverColor: const Color.fromRGBO(227, 29, 29, 1),
       splashColor: const Color.fromARGB(255, 139, 32, 32),
       child: Container(
         width: MediaQuery.of(context).size.width * widht_percent,

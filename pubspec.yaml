@@ -70,6 +70,9 @@ flutter:
     - assets/image/logo.png
     - assets/image/aset_bg_round_kanan.png
     - assets/image/logo_retina_datar_white.png
+    - assets/image/aset_bg_round_top.png
+    - assets/image/pilmenu1.png
+    - assets/image/pilmenu2.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
