@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:retina_app/widget/buttons/button_menu.dart';
-import 'package:retina_app/widget/buttons/button_template.dart';
+// import 'package:retina_app/widget/buttons/button_template.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -27,10 +27,11 @@ class _MenuScreenState extends State<MenuScreen> {
               Image.asset("assets/image/aset_bg_round_top.png",
                   width: MediaQuery.of(context).size.width),
               Padding(
-                padding: EdgeInsets.only(top: 70.h),
+                padding: EdgeInsets.only(top: 40.h),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Align(
                       alignment: Alignment.topCenter,
@@ -42,8 +43,24 @@ class _MenuScreenState extends State<MenuScreen> {
                             color: Colors.white),
                       ),
                     ),
-                    ButtonMenu(context, () {},
-                        text: "Panduan", gambar: "assets/image/pilmenu1.png")
+                    ButtonMenu(context, () {
+                      // Navigator.pushNamed(context, '/menu_screen');
+                      Navigator.pushNamed(context, '/menu_screen');
+                    },
+                        widht_percent: 0.75,
+                        height_percent: 0.35,
+                        radius: 10.dm,
+                        text: "Panduan",
+                        gambar: "assets/image/pilmenu1.png"),
+                    ButtonMenu(context, () {
+                      // Navigator.pushNamed(context, '/sambung_perangkat_screen');
+                      Navigator.pushNamed(context, '/sambung_perangkat_screen');
+                    },
+                        widht_percent: 0.75,
+                        height_percent: 0.35,
+                        radius: 10.dm,
+                        text: "Sambungkan",
+                        gambar: "assets/image/pilmenu2.png"),
                   ],
                 ),
               ),

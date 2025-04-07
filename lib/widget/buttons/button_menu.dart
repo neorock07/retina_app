@@ -5,8 +5,8 @@ Widget ButtonMenu(BuildContext context, void Function() onTap,
     {required String text,
     String? gambar,
     num widht_percent = 0.8,
-    num height_percent = 0.8,
-    double radius = 50}) {
+    num height_percent = 0.4,
+    double radius = 10}) {
   return Material(
     color: Colors.transparent,
     child: InkWell(
@@ -19,23 +19,17 @@ Widget ButtonMenu(BuildContext context, void Function() onTap,
         width: MediaQuery.of(context).size.width * widht_percent,
         height: MediaQuery.of(context).size.height * height_percent,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(radius),
-        ),
+            borderRadius: BorderRadius.circular(radius),
+            image:
+                DecorationImage(image: AssetImage(gambar!), fit: BoxFit.cover)),
         child: Center(
-          child: Stack(children: [
-            Image.asset(
-              gambar!,
-              width: 100.w,
-              height: 100.h,
-            ),
-            Text(
-              text,
-              style: TextStyle(
-                  fontFamily: "Hammersmith",
-                  fontSize: 18.sp,
-                  color: Colors.white),
-            ),
-          ]),
+          child: Text(
+            text,
+            style: TextStyle(
+                fontFamily: "Hammersmith",
+                fontSize: 18.sp,
+                color: Colors.white),
+          ),
         ),
       ),
     ),

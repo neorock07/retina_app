@@ -68,6 +68,7 @@ class _StartScreenState extends State<StartScreen> {
                     ),
                     ButtonTemplate(context, () {
                       Navigator.pushNamed(context, '/menu_screen');
+                      // Navigator.pushReplacementNamed(context, '/menu_screen');
                     },
                         text: "Mulai Sekarang",
                         height_percent: 0.07,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:retina_app/pages/menu_screen.dart';
+import 'package:retina_app/pages/sambung_perangkat_screen.dart';
 import 'package:retina_app/pages/splash_screen.dart';
 import 'package:retina_app/pages/start_screen.dart';
 
@@ -17,6 +18,9 @@ class Routers {
         return MaterialPageRoute(builder: (_) => const StartScreen());
       case "/menu_screen":
         return MaterialPageRoute(builder: (_) => const MenuScreen());
+      case "/sambung_perangkat_screen":
+        return MaterialPageRoute(
+            builder: (_) => const SambungPerangkatScreen());
       default:
         return _errorRoute();
     }
