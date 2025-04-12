@@ -67,7 +67,8 @@ class _SambungWifiScreenState extends State<SambungWifiScreen> {
                       height: 20.h,
                     ),
                     ButtonTemplate(context, () {
-                      Navigator.pushNamed(context, '/pilih_wifi_screen');
+                      Navigator.pushReplacementNamed(
+                          context, '/pilih_wifi_screen');
                       // Navigator.pushReplacementNamed(
                       //     context, '/pilih_wifi_screen');
                     },

@@ -50,7 +50,7 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                       Center(
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.8,
-                          height: MediaQuery.of(context).size.height * 0.5,
+                          height: MediaQuery.of(context).size.height * 0.55,
                           decoration: BoxDecoration(
                               color: Color.fromRGBO(49, 49, 49, 100),
                               borderRadius: BorderRadius.circular(10.dm)),
@@ -72,7 +72,7 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                                     borderRadius: BorderRadius.circular(10.dm)),
                                 child: Padding(
                                   padding: EdgeInsets.only(
-                                      right: 10.dm, left: 15.dm),
+                                      right: 12.dm, left: 12.dm),
                                   child: TextFormField(
                                     decoration: InputDecoration(
                                       hintText: "Masukkan Nama Wi-Fi",
@@ -97,7 +97,7 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                                     borderRadius: BorderRadius.circular(10.dm)),
                                 child: Padding(
                                   padding: EdgeInsets.only(
-                                      right: 10.dm, left: 10.dm),
+                                      right: 12.dm, left: 12.dm),
                                   child: Obx(
                                     () => TextFormField(
                                       obscureText: !isVisible.value,
@@ -141,14 +141,14 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 95.h,
+                        height: 65.h,
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Padding(
                           padding: EdgeInsets.only(bottom: 10.h),
                           child: ButtonTemplate(context, () {
-                            Navigator.pushNamed(
+                            Navigator.pushReplacementNamed(
                                 context, '/wifi_berhasil_screen');
                             // Navigator.pushReplacementNamed(
                             //     context, '/pilih_wifi_screen');
