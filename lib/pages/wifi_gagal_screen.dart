@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:retina_app/widget/buttons/button_template.dart';
 
-class StartScreen extends StatefulWidget {
-  const StartScreen({Key? key}) : super(key: key);
+class WifiGagalScreen extends StatefulWidget {
+  const WifiGagalScreen({Key? key}) : super(key: key);
 
   @override
-  _StartScreenState createState() => _StartScreenState();
+  _WifiGagalScreenState createState() => _WifiGagalScreenState();
 }
 
-class _StartScreenState extends State<StartScreen> {
+class _WifiGagalScreenState extends State<WifiGagalScreen> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -47,17 +47,17 @@ class _StartScreenState extends State<StartScreen> {
                       height: 10.h,
                     ),
                     Text(
-                      "Kenali Dunia dengan Cara Baru",
+                      "Maaf Wifi Tidak Dapat Tersambung",
                       style: TextStyle(
                           fontFamily: "Hammersmith",
-                          fontSize: 60.sp,
+                          fontSize: 48.sp,
                           color: Colors.white),
                     ),
                     SizedBox(
                       height: 10.h,
                     ),
                     Text(
-                      "Teknologi assistive yang membawa Anda lebih dekat dengan dunia. RETINA membantu Anda mengenali lingkungan sekitar, memahami objek, dan berinteraksi dengan lebih mandiri. Mari melangkah lebih jauh bersama RETINA!",
+                      "Mohon cek kembali apakah password Wi-Fi yang Anda sambungkan sudah benar. Pastikan bahwa Wi-Fi yang digunakan dapat digunakan untuk mengakses internet",
                       style: TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 14.sp,
@@ -67,10 +67,11 @@ class _StartScreenState extends State<StartScreen> {
                       height: 20.h,
                     ),
                     ButtonTemplate(context, () {
-                      Navigator.pushNamed(context, '/menu_screen');
-                      // Navigator.pushReplacementNamed(context, '/menu_screen');
+                      // Navigator.pushNamed(context, '/menu_screen');
+                      Navigator.pushReplacementNamed(context,
+                          '/pilih_wifi_screen'); //harusnya nanti ke ble_connect
                     },
-                        text: "Mulai Sekarang",
+                        text: "Sambungkan Ulang",
                         height_percent: 0.07,
                         radius: 50.dm)
                   ],

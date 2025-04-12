@@ -45,7 +45,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     ),
                     ButtonMenu(context, () {
                       // Navigator.pushNamed(context, '/menu_screen');
-                      Navigator.pushNamed(context, '/menu_screen');
+                      Navigator.pushNamed(context, '/panduan_screen');
                     },
                         widht_percent: 0.75,
                         height_percent: 0.35,

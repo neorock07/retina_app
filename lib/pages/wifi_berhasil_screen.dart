@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:retina_app/widget/buttons/button_template.dart';
 
-class StartScreen extends StatefulWidget {
-  const StartScreen({Key? key}) : super(key: key);
+class WifiBerhasilScreen extends StatefulWidget {
+  const WifiBerhasilScreen({Key? key}) : super(key: key);
 
   @override
-  _StartScreenState createState() => _StartScreenState();
+  _WifiBerhasilScreenState createState() => _WifiBerhasilScreenState();
 }
 
-class _StartScreenState extends State<StartScreen> {
+class _WifiBerhasilScreenState extends State<WifiBerhasilScreen> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -47,17 +47,17 @@ class _StartScreenState extends State<StartScreen> {
                       height: 10.h,
                     ),
                     Text(
-                      "Kenali Dunia dengan Cara Baru",
+                      "Perangkat Berhasil Tersambung dengan Internet",
                       style: TextStyle(
                           fontFamily: "Hammersmith",
-                          fontSize: 60.sp,
+                          fontSize: 48.sp,
                           color: Colors.white),
                     ),
                     SizedBox(
                       height: 10.h,
                     ),
                     Text(
-                      "Teknologi assistive yang membawa Anda lebih dekat dengan dunia. RETINA membantu Anda mengenali lingkungan sekitar, memahami objek, dan berinteraksi dengan lebih mandiri. Mari melangkah lebih jauh bersama RETINA!",
+                      "Perangkat RETINA sudah dapat digunakan untuk keperluan Anda",
                       style: TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 14.sp,
@@ -67,12 +67,10 @@ class _StartScreenState extends State<StartScreen> {
                       height: 20.h,
                     ),
                     ButtonTemplate(context, () {
-                      Navigator.pushNamed(context, '/menu_screen');
-                      // Navigator.pushReplacementNamed(context, '/menu_screen');
-                    },
-                        text: "Mulai Sekarang",
-                        height_percent: 0.07,
-                        radius: 50.dm)
+                      Navigator.pushNamed(context, '/wifi_gagal_screen');
+                      // Navigator.pushReplacementNamed(
+                      //     context, '/pilih_wifi_screen');
+                    }, text: "Selesai", height_percent: 0.07, radius: 50.dm)
                   ],
                 ),
               )

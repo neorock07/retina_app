@@ -3,14 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:retina_app/widget/buttons/button_template.dart';
 
-class StartScreen extends StatefulWidget {
-  const StartScreen({Key? key}) : super(key: key);
+class SambungPerangkatGagalScreen extends StatefulWidget {
+  const SambungPerangkatGagalScreen({Key? key}) : super(key: key);
 
   @override
-  _StartScreenState createState() => _StartScreenState();
+  _SambungPerangkatGagalScreenState createState() =>
+      _SambungPerangkatGagalScreenState();
 }
 
-class _StartScreenState extends State<StartScreen> {
+class _SambungPerangkatGagalScreenState
+    extends State<SambungPerangkatGagalScreen> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -47,17 +49,17 @@ class _StartScreenState extends State<StartScreen> {
                       height: 10.h,
                     ),
                     Text(
-                      "Kenali Dunia dengan Cara Baru",
+                      "Maaf Tidak Dapat Tersambung",
                       style: TextStyle(
                           fontFamily: "Hammersmith",
-                          fontSize: 60.sp,
+                          fontSize: 48.sp,
                           color: Colors.white),
                     ),
                     SizedBox(
                       height: 10.h,
                     ),
                     Text(
-                      "Teknologi assistive yang membawa Anda lebih dekat dengan dunia. RETINA membantu Anda mengenali lingkungan sekitar, memahami objek, dan berinteraksi dengan lebih mandiri. Mari melangkah lebih jauh bersama RETINA!",
+                      "Mohon cek kembali apakah perangkat yang Anda sambungkan adalah perangkat RETINA. Pastikan perangkat RETINA dalam kondisi siap untuk disambungkan menggunakan Bluetooth dengan menekan sensor touch sebanyak 5 kali",
                       style: TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 14.sp,
@@ -67,10 +69,11 @@ class _StartScreenState extends State<StartScreen> {
                       height: 20.h,
                     ),
                     ButtonTemplate(context, () {
-                      Navigator.pushNamed(context, '/menu_screen');
-                      // Navigator.pushReplacementNamed(context, '/menu_screen');
+                      // Navigator.pushNamed(context, '/menu_screen');
+                      Navigator.pushReplacementNamed(context,
+                          '/sambung_wifi_screen'); //harusnya nanti ke ble_connect
                     },
-                        text: "Mulai Sekarang",
+                        text: "Sambungkan Ulang",
                         height_percent: 0.07,
                         radius: 50.dm)
                   ],
