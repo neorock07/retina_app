@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-Widget ButtonMenu(BuildContext context, void Function() onTap,
+Widget ButtonPanduan(BuildContext context, void Function() onTap,
     {required String text,
-    String? gambar,
-    num widht_percent = 0.4,
-    num height_percent = 0.4,
+    Color color1 = const Color.fromRGBO(238, 83, 85, 1),
+    Color color2 = const Color.fromRGBO(227, 29, 29, 1),
+    num widht_percent = 0.35,
+    num height_percent = 0.2,
     double radius = 10}) {
   return Material(
     color: Colors.transparent,
@@ -20,8 +21,14 @@ Widget ButtonMenu(BuildContext context, void Function() onTap,
         height: MediaQuery.of(context).size.height * height_percent,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(radius),
-            image:
-                DecorationImage(image: AssetImage(gambar!), fit: BoxFit.cover)),
+            gradient: LinearGradient(
+              colors: [
+                color1,
+                color2,
+              ],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            )),
         child: Center(
           child: Text(
             text,

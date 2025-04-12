@@ -22,12 +22,12 @@ class _MenuScreenState extends State<MenuScreen> {
           systemNavigationBarIconBrightness: Brightness.light,
         ),
         child: Scaffold(
-            backgroundColor: Color.fromRGBO(17, 17, 16, 1.0),
+            backgroundColor: Color.fromRGBO(17, 17, 16, 1),
             body: Stack(children: [
               Image.asset("assets/image/aset_bg_round_top.png",
                   width: MediaQuery.of(context).size.width),
               Padding(
-                padding: EdgeInsets.only(top: 40.h),
+                padding: EdgeInsets.only(top: 50.h, bottom: 40.h),
                 child: Column(
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
