@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,13 +47,30 @@ class _StartScreenState extends State<StartScreen> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Text(
-                      "Kenali Dunia dengan Cara Baru",
-                      style: TextStyle(
-                          fontFamily: "Hammersmith",
-                          fontSize: 60.sp,
-                          color: Colors.white),
-                    ),
+                    DefaultTextStyle(
+                        style: TextStyle(
+                            fontFamily: "Hammersmith",
+                            fontSize: 60.sp,
+                            color: Colors.white),
+                        child: AnimatedTextKit(
+                          animatedTexts: [
+                            TypewriterAnimatedText(
+                              "Kenali Dunia dengan Cara Baru",
+                              speed: Duration(milliseconds: 200),
+                              textStyle: TextStyle(
+                                  fontFamily: "Hammersmith",
+                                  fontSize: 60.sp,
+                                  color: Colors.white),
+                            )
+                          ],
+                        )),
+                    // Text(
+                    //   "Kenali Dunia dengan Cara Baru",
+                    //   style: TextStyle(
+                    //       fontFamily: "Hammersmith",
+                    //       fontSize: 60.sp,
+                    //       color: Colors.white),
+                    // ),
                     SizedBox(
                       height: 10.h,
                     ),

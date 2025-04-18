@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:retina_app/controller/bluetooth_controller.dart';
 import 'package:retina_app/widget/buttons/button_template.dart';
+import 'package:retina_app/widget/popup/dialog_pop.dart';
 
 class SambungPerangkatScreen extends StatefulWidget {
   const SambungPerangkatScreen({Key? key}) : super(key: key);
@@ -11,6 +14,8 @@ class SambungPerangkatScreen extends StatefulWidget {
 }
 
 class _SambungPerangkatScreenState extends State<SambungPerangkatScreen> {
+  var _bleController = Get.put(BLEController());
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -66,10 +71,50 @@ class _SambungPerangkatScreenState extends State<SambungPerangkatScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    ButtonTemplate(context, () {
+                    ButtonTemplate(context, () async {
                       // Navigator.pushNamed(context, '/menu_screen');
-                      Navigator.pushReplacementNamed(
-                          context, '/sambung_wifi_screen');
+                      await _bleController.Ble_check().then((value) {
+                        setState(() {});
+
+                        if (_bleController.isOn.value) {
+                        Navigator.pushReplacementNamed(
+                            context, '/list_ble_screen');
+                      } else {
+                        DialogPop(context,
+                            height: 0.1,
+                            icon: Center(
+                                child: Row(
+                              children: [
+                                SizedBox(
+                                  height: 20.dm,
+                                  width: 20.dm,
+                                  child: CircleAvatar(
+                                      radius: 20.dm,
+                                      child: Icon(
+                                        Icons.bluetooth_sharp,
+                                        color: Colors.white,
+                                        size: 15.dm,
+                                      )),
+                                ),
+                                SizedBox(
+                                  width: 3.w,
+                                ),
+                                Text(
+                                  "Mohon hidupkan Bluetooth!",
+                                  style: TextStyle(
+                                      fontFamily: "Poppins",
+                                      color: Colors.black,
+                                      fontSize: 16.sp),
+                                ),
+                              ],
+                            )));
+                      }
+                      });
+
+                      
+
+                      // Navigator.pushReplacementNamed(
+                      //     context, '/sambung_wifi_screen');
                     },
                         text: "Hidupkan Bluetooth",
                         height_percent: 0.07,

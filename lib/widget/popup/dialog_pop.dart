@@ -29,11 +29,7 @@ Future<dynamic> DialogPop(BuildContext context,
                 borderRadius: BorderRadius.circular(10.dm),
                 color: Colors.white,
               ),
-              child: Column(
-                children: [
-                  TextFormField(),
-                ],
-              )),
+              child: icon),
         );
       });
 }
