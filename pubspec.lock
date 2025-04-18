@@ -376,6 +376,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  wifi_hunter:
+    dependency: "direct main"
+    description:
+      name: wifi_hunter
+      sha256: "736deeeb9191975f5284b05a0004226d512c42af3a1fb7cb47cf5804b6e9d0fc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1+2"
   xml:
     dependency: transitive
     description:

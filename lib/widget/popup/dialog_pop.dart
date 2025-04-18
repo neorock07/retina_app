@@ -12,6 +12,7 @@ Future<dynamic> DialogPop(BuildContext context,
     double width = 0.8,
     bool is_good = true,
     String? label,
+    Color? color =  Colors.white,
     bool? dismissable = true}) {
   return showDialog(
       context: context,
@@ -19,7 +20,7 @@ Future<dynamic> DialogPop(BuildContext context,
       builder: (BuildContext context) {
         return AlertDialog(
           // title: Text("Loading..."),
-          backgroundColor: Colors.white,
+          backgroundColor: color,
           content: AnimatedContainer(
               duration: const Duration(seconds: 2),
               curve: Curves.elasticIn,

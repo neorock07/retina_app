@@ -67,7 +67,7 @@ class _WifiBerhasilScreenState extends State<WifiBerhasilScreen> {
                       height: 20.h,
                     ),
                     ButtonTemplate(context, () {
-                      Navigator.pushNamed(context, '/wifi_gagal_screen');
+                      Navigator.pushNamed(context, '/menu_screen');
                       // Navigator.pushReplacementNamed(
                       //     context, '/pilih_wifi_screen');
                     }, text: "Selesai", height_percent: 0.07, radius: 50.dm)

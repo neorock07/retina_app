@@ -2,10 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:retina_app/controller/bluetooth_controller.dart';
 import 'package:retina_app/widget/buttons/button_template.dart';
+import 'package:retina_app/widget/popup/dialog_pop.dart';
 
 class BleConnectScreen extends StatefulWidget {
   const BleConnectScreen({Key? key}) : super(key: key);
@@ -20,6 +22,10 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
   Future<void> _BleScanImplement() async {
     log("jalan ra sih");
     await _bleController.Ble_scan();
+  }
+
+  Function? _onError(){
+    DialogPop(context, icon: Center(child: Text("Gagal menghubungkan!"),));
   }
 
   @override
@@ -65,104 +71,165 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
               ),
             ),
             Center(
-              child: 
-              
-              Obx(() => (_bleController.devices_name.value.isEmpty)?
-              CircularProgressIndicator(color: Colors.red, strokeWidth: 4.w,)
-              :
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.7,
-                width: double.maxFinite,
-                child: ListView.builder(
-                    padding: EdgeInsets.all(10.dm),
-                    itemCount: _bleController.devices_name.length,
-                    itemBuilder: (_, index) {
-                      return Padding(
-                        padding: EdgeInsets.only(top: 5.h),
-                        child: Container(
-                          width: 200.w,
-                          height: 80.h,
-                          decoration: BoxDecoration(
-                              color: const Color.fromRGBO(49, 49, 49, 100),
-                              borderRadius: BorderRadius.circular(10.dm)),
-                          child: Padding(
-                            padding: EdgeInsets.all(10.dm),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      height: 20.dm,
-                                      width: 20.dm,
-                                      child: CircleAvatar(
-                                          radius: 20.dm,
-                                          child: Icon(
-                                            Icons.bluetooth_sharp,
-                                            color: Colors.white,
-                                            size: 15.dm,
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          _bleController.devices_name.value[index],
-                                          style: TextStyle(
-                                              fontFamily: "Poppins",
-                                              fontSize: 16.sp,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          _bleController.devices_id.value[index],
-                                          style: TextStyle(
-                                              fontFamily: "Poppins",
-                                              fontSize: 14.sp,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          _bleController.devices_rssi.value[index],
-                                          style: TextStyle(
-                                              fontFamily: "Poppins",
-                                              fontSize: 12.sp,
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                child: Obx(
+              () => (_bleController.devices_name.value.isEmpty)
+                  ? CircularProgressIndicator(
+                      color: Colors.red,
+                      strokeWidth: 4.w,
+                    )
+                  : SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      width: double.maxFinite,
+                      child: ListView.builder(
+                          padding: EdgeInsets.all(10.dm),
+                          itemCount: _bleController.devices_name.length,
+                          itemBuilder: (_, index) {
+                            return Padding(
+                              padding: EdgeInsets.only(top: 5.h),
+                              child: Container(
+                                width: 200.w,
+                                height: 80.h,
+                                decoration: BoxDecoration(
+                                    color:
+                                        const Color.fromRGBO(49, 49, 49, 100),
+                                    borderRadius: BorderRadius.circular(10.dm)),
+                                child: Padding(
+                                  padding: EdgeInsets.all(10.dm),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            height: 20.dm,
+                                            width: 20.dm,
+                                            child: CircleAvatar(
+                                                radius: 20.dm,
+                                                child: Icon(
+                                                  Icons.bluetooth_sharp,
+                                                  color: Colors.white,
+                                                  size: 15.dm,
+                                                )),
+                                          ),
+                                          SizedBox(
+                                            width: 10.w,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                _bleController
+                                                    .devices_name.value[index],
+                                                style: TextStyle(
+                                                    fontFamily: "Poppins",
+                                                    fontSize: 16.sp,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                _bleController
+                                                    .devices_id.value[index],
+                                                style: TextStyle(
+                                                    fontFamily: "Poppins",
+                                                    fontSize: 14.sp,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.signal_cellular_4_bar,
+                                                    color: Colors.white,
+                                                    size: 12.dm,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 3.w,
+                                                  ),
+                                                  Text(
+                                                    "${_bleController.devices_rssi.value[index]} dBm",
+                                                    style: TextStyle(
+                                                        fontFamily: "Poppins",
+                                                        fontSize: 12.sp,
+                                                        color: Colors.grey,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Obx(() => ButtonTemplate(context,
+                                              () async {
+                                            var subs = _bleController.devices
+                                                .value[index].connectionState
+                                                .listen((event) async {
+                                              if (event ==
+                                                  BluetoothConnectionState
+                                                      .disconnected) {
+                                                log("${_bleController.devices.value[index].disconnectReason?.code} ${_bleController.devices.value[index].disconnectReason?.description}");
+                                                await _bleController
+                                                    .devices.value[index]
+                                                    .connect(
+                                                        timeout: const Duration(
+                                                            seconds: 15))
+                                                    .then(
+                                                      (value) {
+                                                  _bleController
+                                                      .isConnected.value = true;
+                                                  _bleController.connected_index
+                                                      .value = index;
+
+                                                  Navigator.pushNamedAndRemoveUntil(context, "/pilih_wifi_screen", (route) => false);    
+                                                },
+                                                
+                                                );
+                                              }
+                                            });
+                                          },
+                                              text: (_bleController
+                                                          .isConnected.value &&
+                                                      index ==
+                                                          _bleController
+                                                              .connected_index
+                                                              .value)
+                                                  ? "CONNECTED"
+                                                  : "CONNECT",
+                                              height_percent: 0.05,
+                                              widht_percent: (_bleController
+                                                          .isConnected.value &&
+                                                      index ==
+                                                          _bleController
+                                                              .connected_index
+                                                              .value)
+                                                  ? 0.28
+                                                  : 0.25,
+                                              radius: 5.dm))
+                                    ],
+                                  ),
                                 ),
-                                ButtonTemplate(context, () async {},
-                                    text: "CONNECT",
-                                    height_percent: 0.05,
-                                    widht_percent: 0.25,
-                                    radius: 5.dm)
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    }), 
-                
-              ),)
-            ),
+                              ),
+                            );
+                          }),
+                    ),
+            )),
             Padding(
-              padding: EdgeInsets.only(bottom:20.h),
+              padding: EdgeInsets.only(bottom: 20.h),
               child: Align(
                   alignment: Alignment.bottomCenter,
                   child: ButtonTemplate(context, () async {
+                    _bleController.devices.clear();
+                    _bleController.devices_name.clear();
+                    _bleController.devices_rssi.clear();
+                    _bleController.devices_id.clear();
                     await _BleScanImplement();
                     setState(() {});
-                  },
-                      text: "SCAN",
-                      height_percent: 0.07,
-                      radius: 50.dm)),
+                  }, text: "SCAN", height_percent: 0.07, radius: 50.dm)),
             )
           ],
         ),

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -10,6 +11,13 @@ class BLEController extends GetxController {
   RxList<dynamic> devices_name = [].obs;
   RxList<dynamic> devices_id = [].obs;
   RxList<dynamic> devices_rssi = [].obs;
+  RxList<BluetoothDevice> devices = <BluetoothDevice>[].obs;
+  RxList<BluetoothService> services = <BluetoothService>[].obs;
+  RxBool isConnected = false.obs;
+  RxInt connected_index = 0.obs;
+  BluetoothCharacteristic? targetCharacteristic;
+  var passWifi = TextEditingController();
+
 
   @override
   void onInit() {
@@ -42,7 +50,7 @@ class BLEController extends GetxController {
     FlutterBluePlus.startScan(
         timeout: Duration(seconds: 4), androidUsesFineLocation: true);
     FlutterBluePlus.setLogLevel(LogLevel.verbose, color: false);
-    var subs = FlutterBluePlus.onScanResults.listen((event) {
+    var subs = FlutterBluePlus.onScanResults.listen((event) async{
       log("==SCAN==");
       if (event.isNotEmpty) {
         ScanResult r = event.last;
@@ -51,9 +59,12 @@ class BLEController extends GetxController {
         devices_name.value.add(r.advertisementData.localName);
         devices_id.value.add(r.device.remoteId.str);
         devices_rssi.value.add(r.rssi.toString());
+        devices.value.add(r.device);
+        
         devices_name.value = devices_name.value.toSet().toList();
         devices_id.value = devices_id.value.toSet().toList();
         devices_rssi.value = devices_rssi.value.toSet().toList();
+        devices.value = devices.value.toSet().toList();
       }
     }, onError: (error) => log("Error scan : $error"));
 
@@ -61,4 +72,31 @@ class BLEController extends GetxController {
       FlutterBluePlus.stopScan();
     });
   }
+
+  /**
+   * kirim data ke ESP32
+   */
+  Future<bool> sendData(dynamic services, String wifi_name)async {
+    bool send_condition = false;
+    for (var service in services) {
+      for (var characteristic in service.characteristics) {
+        if (characteristic.properties.write) {
+          targetCharacteristic = characteristic;
+          print("Dapat karakteristik: ${characteristic.uuid}");
+          break;
+        }
+      }
+    }
+
+    var text = "${wifi_name},${passWifi.text}";
+    if (targetCharacteristic == null) return false;
+    final bytes = text.codeUnits;
+    await targetCharacteristic!.write(bytes, withoutResponse: false).then((value) {
+      send_condition = true;
+    });
+    log("Terkirim: $text");
+    return send_condition;
+  }
+
+
 }
