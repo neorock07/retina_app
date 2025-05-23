@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:retina_app/pages/ble_connect_screen.dart';
+import 'package:retina_app/pages/input_kode_screen.dart';
 import 'package:retina_app/pages/menu_screen.dart';
 import 'package:retina_app/pages/panduan_screen.dart';
 import 'package:retina_app/pages/pilih_wifi_screen.dart';
@@ -23,6 +24,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case "/start_screen":
         return MaterialPageRoute(builder: (_) => const StartScreen());
+      case "/input_kode_screen":
+        return MaterialPageRoute(builder: (_) => const InputKodeScreen());
       case "/menu_screen":
         return MaterialPageRoute(builder: (_) => const MenuScreen());
       case "/list_ble_screen":

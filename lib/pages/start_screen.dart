@@ -56,7 +56,7 @@ class _StartScreenState extends State<StartScreen> {
                           animatedTexts: [
                             TypewriterAnimatedText(
                               "Kenali Dunia dengan Cara Baru",
-                              speed: Duration(milliseconds: 200),
+                              speed: Duration(milliseconds: 150),
                               textStyle: TextStyle(
                                   fontFamily: "Hammersmith",
                                   fontSize: 60.sp,
@@ -75,7 +75,7 @@ class _StartScreenState extends State<StartScreen> {
                       height: 10.h,
                     ),
                     Text(
-                      "Teknologi assistive yang membawa Anda lebih dekat dengan dunia. RETINA membantu Anda mengenali lingkungan sekitar, memahami objek, dan berinteraksi dengan lebih mandiri. Mari melangkah lebih jauh bersama RETINA!",
+                      "Teknologi assistive yang membawa Anda lebih dekat dengan dunia. RETINA membantu Anda mengenali lingkungan sekitar, memahami objek, dan berinteraksi dengan lebih mandiri. Scan QR Code perangkat dan melangkah lebih jauh bersama RETINA!",
                       style: TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 14.sp,

@@ -48,7 +48,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       Navigator.pushNamed(context, '/panduan_screen');
                     },
                         widht_percent: 0.75,
-                        height_percent: 0.35,
+                        height_percent: 0.24,
                         radius: 10.dm,
                         text: "Panduan",
                         gambar: "assets/image/pilmenu1.png"),
@@ -57,10 +57,19 @@ class _MenuScreenState extends State<MenuScreen> {
                       Navigator.pushNamed(context, '/sambung_perangkat_screen');
                     },
                         widht_percent: 0.75,
-                        height_percent: 0.35,
+                        height_percent: 0.24,
                         radius: 10.dm,
                         text: "Sambungkan",
                         gambar: "assets/image/pilmenu2.png"),
+                    ButtonMenu(context, () {
+                      // Navigator.pushNamed(context, '/input_kode_screen');
+                      Navigator.pushNamed(context, '/input_kode_screen');
+                    },
+                        widht_percent: 0.75,
+                        height_percent: 0.24,
+                        radius: 10.dm,
+                        text: "Monitoring",
+                        gambar: "assets/image/pilmenu3.png"),
                   ],
                 ),
               ),
