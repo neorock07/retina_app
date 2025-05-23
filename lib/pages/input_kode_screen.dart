@@ -112,7 +112,7 @@ class _InputKodeScreenState extends State<InputKodeScreen> {
                       () {
                         Navigator.pop(context);
                       },
-                      text: "Kembali",
+                      text: "Konfirmasi",
                       height_percent: 0.07,
                       radius: 50.dm,
                     ),
