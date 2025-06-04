@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:retina_app/controller/bluetooth_controller.dart';
+import 'package:retina_app/controller/pref_controller.dart';
 import 'package:retina_app/widget/popup/dialog_pop.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,14 +15,15 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   var bleController = Get.put(BLEController());
+  var prefController = PrefController();
 
   @override
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(const Duration(seconds: 3), () {
-      // prefController.cekLogin(context);
-          Navigator.pushReplacementNamed(context, '/start_screen');
+          prefController.cekLogin(context);
+          // Navigator.pushReplacementNamed(context, '/login_screen');
       
     });
   }

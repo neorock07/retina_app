@@ -63,7 +63,8 @@ class _MenuScreenState extends State<MenuScreen> {
                         gambar: "assets/image/pilmenu2.png"),
                     ButtonMenu(context, () {
                       // Navigator.pushNamed(context, '/input_kode_screen');
-                      Navigator.pushNamed(context, '/input_kode_screen');
+                      Navigator.pushNamed(context, '/scan_screen');
+                      // Navigator.pushNamed(context, '/input_kode_screen');
                     },
                         widht_percent: 0.75,
                         height_percent: 0.24,

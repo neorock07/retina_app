@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:retina_app/controller/bluetooth_controller.dart';
 
+var bleController = Get.put(BLEController());
+bool isPressed = false;
 
-Widget ButtonTemplate(BuildContext context, void Function() onTap,
+Widget ButtonConnect(BuildContext context, void Function() onTap,
     {
     required String text,
     Color color1 = const Color.fromRGBO(238, 83, 85, 1),
@@ -16,7 +18,15 @@ Widget ButtonTemplate(BuildContext context, void Function() onTap,
     color: Colors.transparent,
     child: InkWell(
       onTap: () {
-        onTap();
+        // if(bleController.isConnected.value == true){
+          onTap();
+        // }else{
+        // }
+          SizedBox(
+          height: 30.dm,
+          width: 30.dm,
+          child: CircularProgressIndicator(color: Colors.white,));
+        
       },
       hoverColor: const Color.fromRGBO(227, 29, 29, 1),
       splashColor: const Color.fromARGB(255, 139, 32, 32),
@@ -34,7 +44,13 @@ Widget ButtonTemplate(BuildContext context, void Function() onTap,
               end: Alignment.centerRight,
             )),
         child: Center(
-          child: Text(
+          child: (bleController.isConnected.value == false && isPressed == true)? 
+             SizedBox(
+          height: 30.dm,
+          width: 30.dm,
+          child: CircularProgressIndicator(color: Colors.white,))
+          :
+          Text(
             text,
             style: TextStyle(
                 fontFamily: "Hammersmith",
