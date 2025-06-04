@@ -6,6 +6,7 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:retina_app/controller/bluetooth_controller.dart';
+import 'package:retina_app/widget/buttons/button_connect.dart';
 import 'package:retina_app/widget/buttons/button_template.dart';
 import 'package:retina_app/widget/popup/dialog_pop.dart';
 
@@ -72,7 +73,8 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
             ),
             Center(
                 child: Obx(
-              () => (_bleController.devices_name.value.isEmpty)
+              () => (_bleController.perangkat_detected!.isEmpty)
+              // () => (_bleController.devices_name.value.isEmpty)
                   ? CircularProgressIndicator(
                       color: Colors.red,
                       strokeWidth: 4.w,
@@ -82,8 +84,11 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
                       width: double.maxFinite,
                       child: ListView.builder(
                           padding: EdgeInsets.all(10.dm),
-                          itemCount: _bleController.devices_name.length,
+                          itemCount: _bleController.perangkat_detected!.length,
+                          // itemCount: _bleController.devices_name.length,
                           itemBuilder: (_, index) {
+                            var list_perangkat = _bleController.perangkat_detected!.values.toList();
+
                             return Padding(
                               padding: EdgeInsets.only(top: 5.h),
                               child: Container(
@@ -120,8 +125,9 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                _bleController
-                                                    .devices_name.value[index],
+                                                // _bleController
+                                                //     .devices_name.value[index],
+                                                list_perangkat[index]['name'],
                                                 style: TextStyle(
                                                     fontFamily: "Poppins",
                                                     fontSize: 16.sp,
@@ -130,8 +136,9 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
                                                         FontWeight.bold),
                                               ),
                                               Text(
-                                                _bleController
-                                                    .devices_id.value[index],
+                                                // _bleController
+                                                //     .devices_id.value[index],
+                                                list_perangkat[index]['id'],
                                                 style: TextStyle(
                                                     fontFamily: "Poppins",
                                                     fontSize: 14.sp,
@@ -150,7 +157,8 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
                                                     width: 3.w,
                                                   ),
                                                   Text(
-                                                    "${_bleController.devices_rssi.value[index]} dBm",
+                                                    "${list_perangkat[index]['rssi']} dBm",
+                                                    // "${_bleController.devices_rssi.value[index]} dBm",
                                                     style: TextStyle(
                                                         fontFamily: "Poppins",
                                                         fontSize: 12.sp,
@@ -164,17 +172,19 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
                                           ),
                                         ],
                                       ),
-                                      Obx(() => ButtonTemplate(context,
+                                      Obx(() => ButtonConnect(context,
                                               () async {
-                                            var subs = _bleController.devices
-                                                .value[index].connectionState
+                                            // var subs = _bleController.devices
+                                            //     .value[index].connectionState
+                                             var subs = list_perangkat[index]['devices']
+                                                .connectionState   
                                                 .listen((event) async {
                                               if (event ==
                                                   BluetoothConnectionState
                                                       .disconnected) {
-                                                log("${_bleController.devices.value[index].disconnectReason?.code} ${_bleController.devices.value[index].disconnectReason?.description}");
-                                                await _bleController
-                                                    .devices.value[index]
+                                                log("${list_perangkat[index]['devices'].disconnectReason?.code} ${list_perangkat[index]['devices'].disconnectReason?.description}");
+                                                // log("${_bleController.devices.value[index].disconnectReason?.code} ${_bleController.devices.value[index].disconnectReason?.description}");
+                                                await list_perangkat[index]['devices']
                                                     .connect(
                                                         timeout: const Duration(
                                                             seconds: 15))
@@ -223,10 +233,11 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
               child: Align(
                   alignment: Alignment.bottomCenter,
                   child: ButtonTemplate(context, () async {
-                    _bleController.devices.clear();
-                    _bleController.devices_name.clear();
-                    _bleController.devices_rssi.clear();
-                    _bleController.devices_id.clear();
+                    // _bleController.devices.clear();
+                    // _bleController.devices_name.clear();
+                    // _bleController.devices_rssi.clear();
+                    // _bleController.devices_id.clear();
+                    _bleController.perangkat_detected!.clear();
                     await _BleScanImplement();
                     setState(() {});
                   }, text: "SCAN", height_percent: 0.07, radius: 50.dm)),

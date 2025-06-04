@@ -5,14 +5,14 @@ import 'package:get/get.dart';
 import 'package:retina_app/controller/auth_controller.dart';
 import 'package:retina_app/widget/buttons/button_template.dart';
 
-class InputKodeScreen extends StatefulWidget {
-  const InputKodeScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<InputKodeScreen> createState() => _InputKodeScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _InputKodeScreenState extends State<InputKodeScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   var authController = Get.put(AuthController());
   var _is_load = false.obs;
 
@@ -47,7 +47,7 @@ class _InputKodeScreenState extends State<InputKodeScreen> {
                       Align(
                         alignment: Alignment.center,
                         child: Text(
-                          "Masukkan Kode",
+                          "Login ke Akun",
                           style: TextStyle(
                             fontFamily: "Hammersmith",
                             fontSize: 18.sp,
@@ -70,7 +70,7 @@ class _InputKodeScreenState extends State<InputKodeScreen> {
                   child: Column(
                     children: [
                       Text(
-                        "Masukkan kode yang tertera di sisi samping perangkat untuk dapat menggunakan perangkat dan buat password.",
+                        "Masukkan kode  dan password yang tertera di sisi samping perangkat untuk dapat menggunakan perangkat.",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: "Poppins",
@@ -113,7 +113,7 @@ class _InputKodeScreenState extends State<InputKodeScreen> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          hintText: 'Buat Password',
+                          hintText: 'Password Akun',
                           hintStyle: TextStyle(color: Colors.grey[600]),
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 16.w, vertical: 12.h),
@@ -123,17 +123,39 @@ class _InputKodeScreenState extends State<InputKodeScreen> {
                           ),
                         ),
                       ),
+                      SizedBox(height: 5.h),
+
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            splashColor: Colors.grey,
+                            onTap: () async{
+                              authController.whatsapp();
+                            },
+                            child: Text(
+                                    "Lupa password? Hubungi kami",
+                                    style: TextStyle(
+                                      fontFamily: "Poppins",
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14.sp,
+                                      color: const Color.fromRGBO(227, 29, 29, 1),
+                                    )),
+                          ),
+                        ),
+                      ),
                       SizedBox(height: 20.h),
                       Material(
                         color: Colors.transparent,
                         child: InkWell(
                           splashColor: Colors.grey,
                           onTap: () {
-                            Navigator.pushNamed(context, "/login_screen");
+                            Navigator.pushNamed(context, "/input_kode_screen");
                           },
                           child: RichText(
                               text: TextSpan(
-                                  text: "Sudah punya akun?",
+                                  text: "Belum punya akun?",
                                   style: TextStyle(
                                     fontFamily: "Poppins",
                                     fontWeight: FontWeight.bold,
@@ -142,7 +164,7 @@ class _InputKodeScreenState extends State<InputKodeScreen> {
                                   ),
                                   children: [
                                 TextSpan(
-                                    text: "Login",
+                                    text: "Register",
                                     style: TextStyle(
                                       fontFamily: "Poppins",
                                       fontWeight: FontWeight.bold,
@@ -178,7 +200,7 @@ class _InputKodeScreenState extends State<InputKodeScreen> {
                               () async {
                                 _is_load.value = true;
 
-                                await authController.register().then((value) {
+                                await authController.login().then((value) {
                                   if (value) {
                                     _is_load.value = false;
                                     ScaffoldMessenger.of(context)

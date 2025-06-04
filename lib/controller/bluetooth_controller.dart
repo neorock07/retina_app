@@ -16,6 +16,8 @@ class BLEController extends GetxController {
   RxBool isConnected = false.obs;
   RxInt connected_index = 0.obs;
   BluetoothCharacteristic? targetCharacteristic;
+  RxMap<dynamic, dynamic>? perangkat_detected = <dynamic, dynamic>{}.obs;
+  
   var passWifi = TextEditingController();
 
 
@@ -48,14 +50,18 @@ class BLEController extends GetxController {
   Future<dynamic> Ble_scan() async {
     // Start scanning
     FlutterBluePlus.startScan(
-        timeout: Duration(seconds: 4), androidUsesFineLocation: true);
+        timeout: Duration(seconds: 10), androidUsesFineLocation: true);
     FlutterBluePlus.setLogLevel(LogLevel.verbose, color: false);
     var subs = FlutterBluePlus.onScanResults.listen((event) async{
       log("==SCAN==");
       if (event.isNotEmpty) {
         ScanResult r = event.last;
-        log('${r.device.remoteId}: "${r.advertisementData}" found!');
+        log('${r.device.remoteId} : "${r.advertisementData}" found!');
         // devices.value.add({"name" : r.advertisementData.localName, "id" : r.device.remoteId.str, "rssi" : r.rssi.toString() });
+        if(!perangkat_detected!.containsKey(r.device.remoteId.str)){
+            perangkat_detected![r.device.remoteId] = {"name" : r.advertisementData.localName, "rssi" : r.rssi.toString(), "devices" : r.device, "id" : r.device.remoteId.str }; 
+        }  
+
         devices_name.value.add(r.advertisementData.localName);
         devices_id.value.add(r.device.remoteId.str);
         devices_rssi.value.add(r.rssi.toString());
