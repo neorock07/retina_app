@@ -15,6 +15,7 @@ class SambungPerangkatScreen extends StatefulWidget {
 
 class _SambungPerangkatScreenState extends State<SambungPerangkatScreen> {
   var _bleController = Get.put(BLEController());
+  var _isPressed = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -71,54 +72,65 @@ class _SambungPerangkatScreenState extends State<SambungPerangkatScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    ButtonTemplate(context, () async {
-                      // Navigator.pushNamed(context, '/menu_screen');
-                      await _bleController.Ble_check().then((value) {
-                        setState(() {});
+                    Obx(() => Center(
+                          child: (_bleController.isOn.value == false && _isPressed.value == true)
+                              ? const CircularProgressIndicator(
+                                  color: Colors.red,
+                                )
+                              : ButtonTemplate(context, () async {
+                                  // Navigator.pushNamed(context, '/menu_screen');
+                                  _isPressed.value = true;
+                                  
+                                  await _bleController.checkAndEnableBluetooth().then((value) {
+                                    _isPressed.value = false;
+                                        Navigator.pushReplacementNamed(
+                                          context, '/list_ble_screen');  
+                                  });
+                                  
+                                  // await _bleController.Ble_check()
+                                  //     .then((value) {
+                                  //       _isPressed.value = false;
+                                  //   if (_bleController.isOn.value == true) {
+                                  //     Navigator.pushReplacementNamed(
+                                  //         context, '/list_ble_screen');
+                                  //   } else {
+                                  //     DialogPop(context,
+                                  //         height: 0.1,
+                                  //         icon: Center(
+                                  //             child: Row(
+                                  //           children: [
+                                  //             SizedBox(
+                                  //               height: 20.dm,
+                                  //               width: 20.dm,
+                                  //               child: CircleAvatar(
+                                  //                   radius: 20.dm,
+                                  //                   child: Icon(
+                                  //                     Icons.bluetooth_sharp,
+                                  //                     color: Colors.white,
+                                  //                     size: 15.dm,
+                                  //                   )),
+                                  //             ),
+                                  //             SizedBox(
+                                  //               width: 3.w,
+                                  //             ),
+                                  //             Text(
+                                  //               "Mohon hidupkan Bluetooth!",
+                                  //               style: TextStyle(
+                                  //                   fontFamily: "Poppins",
+                                  //                   color: Colors.black,
+                                  //                   fontSize: 16.sp),
+                                  //             ),
+                                  //           ],
+                                  //         )));
+                                  //   }
+                                  // });
 
-                        if (_bleController.isOn.value) {
-                        Navigator.pushReplacementNamed(
-                            context, '/list_ble_screen');
-                      } else {
-                        DialogPop(context,
-                            height: 0.1,
-                            icon: Center(
-                                child: Row(
-                              children: [
-                                SizedBox(
-                                  height: 20.dm,
-                                  width: 20.dm,
-                                  child: CircleAvatar(
-                                      radius: 20.dm,
-                                      child: Icon(
-                                        Icons.bluetooth_sharp,
-                                        color: Colors.white,
-                                        size: 15.dm,
-                                      )),
-                                ),
-                                SizedBox(
-                                  width: 3.w,
-                                ),
-                                Text(
-                                  "Mohon hidupkan Bluetooth!",
-                                  style: TextStyle(
-                                      fontFamily: "Poppins",
-                                      color: Colors.black,
-                                      fontSize: 16.sp),
-                                ),
-                              ],
-                            )));
-                      }
-                      });
-
-                      
-
-                      // Navigator.pushReplacementNamed(
-                      //     context, '/sambung_wifi_screen');
-                    },
-                        text: "Hidupkan Bluetooth",
-                        height_percent: 0.07,
-                        radius: 50.dm)
+                                  
+                                },
+                                  text: "Hidupkan Bluetooth",
+                                  height_percent: 0.07,
+                                  radius: 50.dm),
+                        ))
                   ],
                 ),
               )

@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:retina_app/widget/buttons/button_border.dart';
 import 'package:retina_app/widget/buttons/button_template.dart';
 
 class StartScreen extends StatefulWidget {
@@ -64,18 +65,11 @@ class _StartScreenState extends State<StartScreen> {
                             )
                           ],
                         )),
-                    // Text(
-                    //   "Kenali Dunia dengan Cara Baru",
-                    //   style: TextStyle(
-                    //       fontFamily: "Hammersmith",
-                    //       fontSize: 60.sp,
-                    //       color: Colors.white),
-                    // ),
                     SizedBox(
                       height: 10.h,
                     ),
                     Text(
-                      "Teknologi assistive yang membawa Anda lebih dekat dengan dunia. RETINA membantu Anda mengenali lingkungan sekitar, memahami objek, dan berinteraksi dengan lebih mandiri. Scan QR Code perangkat dan melangkah lebih jauh bersama RETINA!",
+                      "Teknologi assistive yang membawa Anda lebih dekat dengan dunia!",
                       style: TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 14.sp,
@@ -84,14 +78,27 @@ class _StartScreenState extends State<StartScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    ButtonTemplate(context, () {
-                      Navigator.pushNamed(context, '/input_kode_screen');
-                      // Navigator.pushNamed(context, '/menu_screen');
-                      // Navigator.pushReplacementNamed(context, '/menu_screen');
-                    },
-                        text: "Mulai Sekarang",
-                        height_percent: 0.07,
-                        radius: 50.dm)
+                    Column(
+                      children: [
+                        ButtonTemplate(context, () {
+                          Navigator.pushNamed(context, '/login_screen');
+                          // Navigator.pushNamed(context, '/menu_screen');
+                          // Navigator.pushReplacementNamed(context, '/menu_screen');
+                        }, text: "Masuk", height_percent: 0.07, radius: 50.dm),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        ButtonBorder(context, () {
+                          Navigator.pushNamed(context, '/input_kode_screen');
+                          // Navigator.pushNamed(context, '/menu_screen');
+                          // Navigator.pushReplacementNamed(context, '/menu_screen');
+                        },
+                            text: "Daftar",
+                            color_border: Colors.white,
+                            height_percent: 0.07,
+                            radius: 50.dm),
+                      ],
+                    ),
                   ],
                 ),
               )

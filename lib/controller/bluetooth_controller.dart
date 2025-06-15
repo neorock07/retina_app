@@ -17,8 +17,10 @@ class BLEController extends GetxController {
   RxInt connected_index = 0.obs;
   BluetoothCharacteristic? targetCharacteristic;
   RxMap<dynamic, dynamic>? perangkat_detected = <dynamic, dynamic>{}.obs;
+  BluetoothDevice? selected_device;
   
   var passWifi = TextEditingController();
+  var ssidWifi = TextEditingController();
 
 
   @override
@@ -45,6 +47,24 @@ class BLEController extends GetxController {
     FlutterBluePlus.isOn.then((value) {
       isOn.value = value;
     });
+  }
+
+  Future<void> checkAndEnableBluetooth() async {
+    // Minta izin lokasi (diperlukan untuk scan bluetooth)
+    await Permission.location.request();
+    await Permission.bluetooth.request();
+    await Permission.bluetoothConnect.request();
+    await Permission.bluetoothScan.request();
+
+    // Cek apakah Bluetooth aktif
+    BluetoothAdapterState state = await FlutterBluePlus.adapterState.first;
+
+    if (state != BluetoothAdapterState.on) {
+      print("🔌 Bluetooth sedang mati. Silakan nyalakan secara manual.");
+      await FlutterBluePlus.turnOn(); 
+    } else {
+      print("✅ Bluetooth sudah aktif");
+    }
   }
 
   Future<dynamic> Ble_scan() async {

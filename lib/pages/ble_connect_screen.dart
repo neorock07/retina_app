@@ -19,6 +19,8 @@ class BleConnectScreen extends StatefulWidget {
 
 class _BleConnectScreenState extends State<BleConnectScreen> {
   var _bleController = Get.put(BLEController());
+  var _isPressed = false.obs;
+  var _selected_index = 0.obs;
 
   Future<void> _BleScanImplement() async {
     log("jalan ra sih");
@@ -172,10 +174,15 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
                                           ),
                                         ],
                                       ),
-                                      Obx(() => ButtonConnect(context,
+                                      Obx(() => (_isPressed.value == true && _selected_index.value == index)?
+                                        const CircularProgressIndicator(color: Colors.red,)
+                                        :
+                                        ButtonConnect(context,
                                               () async {
                                             // var subs = _bleController.devices
                                             //     .value[index].connectionState
+                                            _isPressed.value = true;
+                                            _selected_index.value = index;
                                              var subs = list_perangkat[index]['devices']
                                                 .connectionState   
                                                 .listen((event) async {
@@ -184,12 +191,14 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
                                                       .disconnected) {
                                                 log("${list_perangkat[index]['devices'].disconnectReason?.code} ${list_perangkat[index]['devices'].disconnectReason?.description}");
                                                 // log("${_bleController.devices.value[index].disconnectReason?.code} ${_bleController.devices.value[index].disconnectReason?.description}");
+                                                _bleController.selected_device = list_perangkat[index]['devices']; 
                                                 await list_perangkat[index]['devices']
                                                     .connect(
                                                         timeout: const Duration(
                                                             seconds: 15))
                                                     .then(
                                                       (value) {
+                                                        _isPressed.value = false;
                                                   _bleController
                                                       .isConnected.value = true;
                                                   _bleController.connected_index

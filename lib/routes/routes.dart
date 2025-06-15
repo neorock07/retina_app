@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:retina_app/pages/akun_screen.dart';
 import 'package:retina_app/pages/ble_connect_screen.dart';
+import 'package:retina_app/pages/connecting_screen.dart';
 import 'package:retina_app/pages/input_kode_screen.dart';
 import 'package:retina_app/pages/login_screen.dart';
 import 'package:retina_app/pages/menu_screen.dart';
+import 'package:retina_app/pages/monitoring_screen.dart';
 import 'package:retina_app/pages/panduan_screen.dart';
 import 'package:retina_app/pages/pilih_wifi_screen.dart';
 import 'package:retina_app/pages/sambung_perangkat_gagal_screen.dart';
@@ -28,6 +31,12 @@ class Routers {
       case "/input_kode_screen":
         return MaterialPageRoute(builder: (_) => const InputKodeScreen());
       
+      case "/monitor_screen":
+        return MaterialPageRoute(builder: (_) => const MonitoringScreen());
+      
+      case "/connecting_screen":
+        return MaterialPageRoute(builder: (_) => const ConnectingScreen());
+      
       case "/login_screen":
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       
@@ -51,6 +60,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => const WifiGagalScreen());
       case "/panduan_screen":
         return MaterialPageRoute(builder: (_) => const PanduanScreen());
+      case "/akun_screen":
+        return MaterialPageRoute(builder: (_) => const AkunScreen());
       default:
         return _errorRoute();
     }

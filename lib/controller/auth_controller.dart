@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -30,8 +31,10 @@ class AuthController extends GetxController {
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         data = jsonDecode(response.body);
-        pref_controller.saveRegister(data!['id'], password.text);
-        condition = (data['status'] == 200)? true : false;
+        condition = (data!['status'] == 200)? true : false;
+        if(condition == true){
+            pref_controller.saveRegister(data['id'], password.text);
+        }
       } else {
         condition = false;
       }
@@ -43,6 +46,7 @@ class AuthController extends GetxController {
 
 
   Future<bool> login() async {
+    log("device ==> ${id_device.text}");
     String URL =
         "${url_config.getType()}://${url_config.URL()}/api/v1/login?device_id=${id_device.text}&password=${password.text}";
     final URI = Uri.parse(URL);
@@ -57,8 +61,10 @@ class AuthController extends GetxController {
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         data = jsonDecode(response.body);
-        pref_controller.saveRegister(data!['id'], password.text);
-        condition = data['status'];
+        condition = data!['status'];
+        if(condition == true){
+            pref_controller.saveRegister(data['id'], password.text);
+        }
       } else {
         condition = false;
       }
@@ -74,6 +80,33 @@ class AuthController extends GetxController {
 
   String contact = "6285702572587";
   String text = "Halo, saya pengguna RETINA ingin mengganti password akun pada perangkat :\n\n*ID* : ${id_device}\n\n*Password Baru* : \n\n_Note_: Isi dengan password baru Anda.";
+  String androidUrl = "https://wa.me/$contact/?text=$text";
+  String iosUrl = "https://wa.me/$contact?text=$text";
+
+  String webUrl = 'https://api.whatsapp.com/send/?phone=$contact&text=hi';
+
+  try {
+    if (Platform.isIOS) {
+      if (await canLaunchUrl(Uri.parse(iosUrl))) {
+        await launchUrl(Uri.parse(iosUrl));
+      }
+    } else {
+      if (await canLaunchUrl(Uri.parse(androidUrl))) {
+        await launchUrl(Uri.parse(androidUrl));
+      }
+    }
+  } catch(e) {
+    print('object');
+    await launchUrl(Uri.parse(webUrl), mode: LaunchMode.externalApplication);
+  }
+}
+
+  void call_center() async {
+
+  String? id_device = await pref_controller.getDevice();  
+
+  String contact = "6285702572587";
+  String text = "Halo, saya pengguna RETINA mempunyai keluhan pada perangkat :\n\n*ID* : ${id_device}";
   String androidUrl = "https://wa.me/$contact/?text=$text";
   String iosUrl = "https://wa.me/$contact?text=$text";
 

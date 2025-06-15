@@ -25,7 +25,9 @@ class PrefController {
       await prefs.clear();
       // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(
-          context, '/input_kode_screen', (route) => false);
+          context, '/start_screen', (route) => false);
+      // Navigator.pushNamedAndRemoveUntil(
+      //     context, '/input_kode_screen', (route) => false);
     }
   }
 

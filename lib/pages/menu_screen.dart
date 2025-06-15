@@ -27,6 +27,32 @@ class _MenuScreenState extends State<MenuScreen> {
               Image.asset("assets/image/aset_bg_round_top.png",
                   width: MediaQuery.of(context).size.width),
               Padding(
+                padding: EdgeInsets.only(top:40.h, right: 15.w),
+                child: Align(
+                  alignment: Alignment.topRight, 
+                  child: IconButton(
+                              onPressed: () { 
+                                Navigator.pushNamed(context, "/akun_screen");
+                               },
+                              icon: SizedBox(
+                                    width: 30.dm,
+                                    height: 30.dm,
+                                    child: CircleAvatar(
+                                      backgroundColor:
+                                          Color.fromRGBO(115, 37, 37, 1),
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.person,
+                                          size: 20.dm,
+                                          color: Color.fromRGBO(255, 189, 189, 1),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                            ),
+                ),
+              ),
+              Padding(
                 padding: EdgeInsets.only(top: 50.h, bottom: 40.h),
                 child: Column(
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,7 +89,7 @@ class _MenuScreenState extends State<MenuScreen> {
                         gambar: "assets/image/pilmenu2.png"),
                     ButtonMenu(context, () {
                       // Navigator.pushNamed(context, '/input_kode_screen');
-                      Navigator.pushNamed(context, '/scan_screen');
+                      Navigator.pushNamed(context, '/monitor_screen');
                       // Navigator.pushNamed(context, '/input_kode_screen');
                     },
                         widht_percent: 0.75,
