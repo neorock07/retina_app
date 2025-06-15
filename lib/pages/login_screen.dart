@@ -220,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
                                             content: Text(
-                                      "Maaf, perangkat sudah memiliki akun!",
+                                      "Maaf, nomer perangkat atau password salah!",
                                       style: TextStyle(
                                         fontFamily: "Poppins",
                                         fontSize: 14.sp,
