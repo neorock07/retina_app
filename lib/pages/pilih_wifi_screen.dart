@@ -18,7 +18,7 @@ class PilihWifiScreen extends StatefulWidget {
 
 class _PilihWifiScreenState extends State<PilihWifiScreen> {
   RxBool isVisible = false.obs;
-
+  
   var _wifiController = Get.put(WifiController());
   var _bleController = Get.put(BLEController());
 
@@ -50,8 +50,6 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 60.h, bottom: 10.h),
                   child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Align(
                         alignment: Alignment.topCenter,
@@ -63,77 +61,76 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                               color: Colors.white),
                         ),
                       ),
-                      SizedBox(
-                        height: 50.h,
-                      ),
-                      Obx(
-                        () => (_wifiController.list_wifi.value.length <= 0)
-                            ? CircularProgressIndicator(
-                                color: Colors.red,
-                                strokeWidth: 4.w,
-                              )
-                            : SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.7,
-                                width: double.maxFinite,
-                                child: ListView.builder(
-                                    itemCount:
-                                        _wifiController.list_wifi.value.length,
-                                    itemBuilder: (_, index) {
-                                      return Padding(
-                                        padding: EdgeInsets.only(top: 5.h),
-                                        child: InkWell(
-                                          onTap: () {
-                                            DialogPop(
-                                              context,
-                                              color: const Color.fromRGBO(
-                                                  49, 49, 49, 100),
-                                              height: 0.48,
-                                              icon: Center(
-                                                child: Column(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  children: [
-                                                  Padding(
-                                                    padding: EdgeInsets.only(
-                                                        top: 40.h,
-                                                        bottom: 10.h),
-                                                    child: Align(
-                                                      alignment: Alignment.center,
-                                                      child: Text(
-                                                        "Password Wi-Fi\n${_wifiController.list_wifi.value[index].ssid}",
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                "Hammersmith",
-                                                            fontSize: 18.sp,
-                                                            color: Colors.black),
-                                                      ),
-                                                    ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 10.w),
+                        child: Align(
+                            alignment: Alignment.topRight,
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    DialogPop(
+                                      context,
+                                      color:
+                                          const Color.fromRGBO(49, 49, 49, 100),
+                                      height: 0.55,
+                                      icon: Center(
+                                        child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                    top: 40.h, bottom: 10.h),
+                                                child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    "Isi SSID dan Password",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                            "Hammersmith",
+                                                        fontSize: 18.sp,
+                                                        color: Colors.black),
                                                   ),
-                                                  Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.6,
-                                                      decoration: BoxDecoration(
-                                                          color: const Color.fromRGBO(
+                                                ),
+                                              ),
+                                              Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.6,
+                                                  decoration: BoxDecoration(
+                                                      color:
+                                                          const Color.fromRGBO(
                                                               255,
                                                               255,
                                                               255,
                                                               0.984),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      10.dm)),
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                right: 12.dm,
-                                                                left: 12.dm),
-                                                        child: Obx(
-                                                          () => TextFormField(
-                                                            controller: _bleController.passWifi,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.dm)),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: 12.dm,
+                                                        left: 12.dm),
+                                                    child: Obx(
+                                                      () => Column(
+                                                        children: [
+                                                          TextFormField(
+                                                            controller:
+                                                                _bleController
+                                                                    .ssidWifi,
+                                                            decoration: InputDecoration(
+                                                                hintText:
+                                                                    "Masukkan SSID",
+                                                                hintStyle: TextStyle(
+                                                                    fontSize:
+                                                                        14.sp)),
+                                                          ),
+                                                          TextFormField(
+                                                            controller:
+                                                                _bleController
+                                                                    .passWifi,
                                                             obscureText:
                                                                 !isVisible
                                                                     .value,
@@ -164,52 +161,317 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                                                                         fontSize:
                                                                             14.sp)),
                                                           ),
-                                                        ),
-                                                      )),
-                                                  Padding(
-                                                      padding: EdgeInsets.only(
-                                                        top: 20.h,
-                                                        left: 15.dm,
-                                                        right: 15.dm,
+                                                          SizedBox(height: 5.h),
+                                                          Obx(() => Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                  value: _bleController.isPermanent
+                                                                      .value,
+                                                                  onChanged:
+                                                                      (bool? b) {
+                                                                    _bleController.isPermanent
+                                                                            .value =
+                                                                        !_bleController.isPermanent
+                                                                            .value;
+                                                                  }),
+                                                              SizedBox(width: 3.w),
+                                                              Text("Gunakan Wi-Fi ini\nseterusnya ?", 
+                                                              style: TextStyle(
+                                                                fontFamily: "Poppins",
+                                                                color: const Color.fromRGBO(49, 49, 49, 100),
+                                                                fontSize: 12.sp
+                                                              ),
+                                                              )    
+                                                            ],
+                                                          ))
+                                                        ],
                                                       ),
-                                                      child: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: SizedBox(
-                                                          width: 250.w,
+                                                    ),
+                                                  )),
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 20.h,
+                                                    left: 15.dm,
+                                                    right: 15.dm,
+                                                  ),
+                                                  child: Align(
+                                                    alignment: Alignment.center,
+                                                    child: SizedBox(
+                                                      width: 250.w,
+                                                      child: Text(
+                                                        "Pastikan Wi-Fi selalu tersedia agar perangkat RETINA dapat digunakan",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                          fontFamily: "Poppins",
+                                                          fontSize: 14.sp,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )),
+                                              SizedBox(height: 20.h),
+                                              ButtonTemplate(context, () async {
+                                                log("devices : ${_bleController.devices.value[_bleController.connected_index.value].remoteId.str}");
+                                                var services =
+                                                    await _bleController
+                                                        .devices
+                                                        .value[_bleController
+                                                            .connected_index
+                                                            .value]
+                                                        .discoverServices();
+                                                await _bleController
+                                                    .sendData(
+                                                        services,
+                                                        _bleController
+                                                            .ssidWifi.text)
+                                                    .then((value) {
+                                                  Navigator.pop(context);
+                                                  if (value) {
+                                                    Navigator
+                                                        .pushReplacementNamed(
+                                                            context,
+                                                            "/connecting_screen");
+                                                  } else {
+                                                    Navigator
+                                                        .pushReplacementNamed(
+                                                            context,
+                                                            "/wifi_gagal_screen");
+                                                  }
+                                                });
+                                              },
+                                                  text: "Sambungkan",
+                                                  widht_percent: 0.6,
+                                                  height_percent: 0.07,
+                                                  radius: 50.dm),
+                                            ]),
+                                      ),
+                                    );
+                                  },
+                                  icon: SizedBox(
+                                    width: 30.dm,
+                                    height: 30.dm,
+                                    child: CircleAvatar(
+                                      backgroundColor:
+                                          Color.fromRGBO(49, 115, 37, 1),
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.speaker_phone_outlined,
+                                          size: 20.dm,
+                                          color: Color.fromRGBO(80, 250, 83, 1),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text("Isi Manual",
+                                    style: TextStyle(
+                                        fontFamily: "Hammersmith",
+                                        fontSize: 12.sp,
+                                        color: Colors.white))
+                              ],
+                            )),
+                      ),
+                      SizedBox(
+                        height: 50.h,
+                      ),
+                      Obx(
+                        () => (_wifiController.list_wifi.value.length <= 0)
+                            ? CircularProgressIndicator(
+                                color: Colors.red,
+                                strokeWidth: 4.w,
+                              )
+                            : SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.8,
+                                width: double.maxFinite,
+                                child: ListView.builder(
+                                    itemCount:
+                                        _wifiController.list_wifi.value.length,
+                                    itemBuilder: (_, index) {
+                                      return Padding(
+                                        padding: EdgeInsets.all(10.dm),
+                                        child: InkWell(
+                                          onTap: () {
+                                            DialogPop(
+                                              context,
+                                              color: const Color.fromRGBO(
+                                                  49, 49, 49, 100),
+                                              height: 0.55,
+                                              icon: Center(
+                                                child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 40.h,
+                                                                bottom: 10.h),
+                                                        child: Align(
+                                                          alignment:
+                                                              Alignment.center,
                                                           child: Text(
-                                                            "Pastikan Wi-Fi selalu tersedia agar perangkat RETINA dapat digunakan",
+                                                            "Password Wi-Fi\n${_wifiController.list_wifi.value[index].ssid}",
                                                             textAlign: TextAlign
                                                                 .center,
                                                             style: TextStyle(
-                                                              fontFamily:
-                                                                  "Poppins",
-                                                              fontSize: 14.sp,
-                                                              color:
-                                                                  Colors.black,
-                                                            ),
+                                                                fontFamily:
+                                                                    "Hammersmith",
+                                                                fontSize: 18.sp,
+                                                                color: Colors
+                                                                    .black),
                                                           ),
                                                         ),
-                                                      )),
-                                                  SizedBox(height: 20.h),
-                                                  ButtonTemplate(
-                                                        context, () async {
-                                                          log("devices : ${_bleController.devices.value[_bleController.connected_index.value].remoteId.str}");
-                                                          var services =  await _bleController.devices.value[_bleController.connected_index.value].discoverServices();
-                                                         await _bleController.sendData(services, _wifiController.list_wifi.value[index].ssid).then((value) {
-                                                          Navigator.pop(context);
-                                                          if(value){
-                                                            Navigator.pushReplacementNamed(context, "/wifi_berhasil_screen");
-                                                          }else{
-                                                            Navigator.pushReplacementNamed(context, "/wifi_gagal_screen");
+                                                      ),
+                                                      Container(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.6,
+                                                          decoration: BoxDecoration(
+                                                              color: const Color
+                                                                      .fromRGBO(
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                  0.984),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.dm)),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    right:
+                                                                        12.dm,
+                                                                    left:
+                                                                        12.dm),
+                                                            child: Obx(
+                                                              () =>
+                                                                  TextFormField(
+                                                                controller:
+                                                                    _bleController
+                                                                        .passWifi,
+                                                                obscureText:
+                                                                    !isVisible
+                                                                        .value,
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                        suffixIcon:
+                                                                            IconButton(
+                                                                          iconSize:
+                                                                              18.sp,
+                                                                          splashColor:
+                                                                              Colors.black,
+                                                                          onPressed:
+                                                                              () {
+                                                                            isVisible.value =
+                                                                                !isVisible.value;
+                                                                          },
+                                                                          icon: (isVisible.value == false)
+                                                                              ? Icon(Icons.visibility_off)
+                                                                              : Icon(Icons.visibility),
+                                                                        ),
+                                                                        hintText:
+                                                                            "Masukkan Password",
+                                                                        hintStyle:
+                                                                            TextStyle(fontSize: 14.sp)),
+                                                              ),
+                                                            ),
+                                                          )),
+                                                          SizedBox(height: 5.h),
+                                                          Obx(() => Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                  value: _bleController.isPermanent
+                                                                      .value,
+                                                                  onChanged:
+                                                                      (bool? b) {
+                                                                    _bleController.isPermanent
+                                                                            .value =
+                                                                        !_bleController.isPermanent
+                                                                            .value;
+                                                                  }),
+                                                              SizedBox(width: 3.w),
+                                                              Text("Gunakan Wi-Fi ini\nseterusnya ?", 
+                                                              style: TextStyle(
+                                                                fontFamily: "Poppins",
+                                                                color: const Color.fromRGBO(49, 49, 49, 100),
+                                                                fontSize: 12.sp
+                                                              ),
+                                                              )    
+                                                            ],
+                                                          )),
+                                                      Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                            top: 20.h,
+                                                            left: 15.dm,
+                                                            right: 15.dm,
+                                                          ),
+                                                          child: Align(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: SizedBox(
+                                                              width: 250.w,
+                                                              child: Text(
+                                                                "Pastikan Wi-Fi selalu tersedia agar perangkat RETINA dapat digunakan",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontFamily:
+                                                                      "Poppins",
+                                                                  fontSize:
+                                                                      14.sp,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          )),
+                                                      SizedBox(height: 20.h),
+                                                      ButtonTemplate(context,
+                                                          () async {
+                                                        log("devices : ${_bleController.devices.value[_bleController.connected_index.value].remoteId.str}");
+                                                        var services = await _bleController
+                                                            .devices
+                                                            .value[_bleController
+                                                                .connected_index
+                                                                .value]
+                                                            .discoverServices();
+                                                        await _bleController
+                                                            .sendData(
+                                                                services,
+                                                                _wifiController
+                                                                    .list_wifi
+                                                                    .value[
+                                                                        index]
+                                                                    .ssid)
+                                                            .then((value) {
+                                                          Navigator.pop(
+                                                              context);
+                                                          if (value) {
+                                                            Navigator
+                                                                .pushReplacementNamed(
+                                                                    context,
+                                                                    "/connecting_screen");
+                                                          } else {
+                                                            Navigator
+                                                                .pushReplacementNamed(
+                                                                    context,
+                                                                    "/wifi_gagal_screen");
                                                           }
-                                                         });
-                                                        },
-                                                        text: "Sambungkan",
-                                                        widht_percent: 0.6,
-                                                        height_percent: 0.07,
-                                                        radius: 50.dm),
-                                                ]),
+                                                        });
+                                                      },
+                                                          text: "Sambungkan",
+                                                          widht_percent: 0.6,
+                                                          height_percent: 0.07,
+                                                          radius: 50.dm),
+                                                    ]),
                                               ),
                                             );
                                           },
@@ -250,6 +512,9 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
                                                         children: [
                                                           Text(
                                                             _wifiController
