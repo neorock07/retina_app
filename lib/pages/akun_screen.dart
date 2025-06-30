@@ -17,9 +17,14 @@ class _AkunScreenState extends State<AkunScreen> {
   var pref_controller = PrefController();
   var authController = Get.put(AuthController());
   var id_device = "".obs;
+  var _credentials = {}.obs;
 
   void get_device() async {
     id_device.value = await pref_controller.getDevice();
+  }
+
+  void get_credentials() async {
+    _credentials.value = await pref_controller.getWifi();
   }
 
   @override
@@ -67,13 +72,25 @@ class _AkunScreenState extends State<AkunScreen> {
                           color: const Color.fromRGBO(49, 49, 49, 1),
                           borderRadius: BorderRadius.circular(10.dm)),
                       child: Center(
-                        child: Obx(() => Text(
-                              "${id_device.value}",
-                              style: TextStyle(
-                                  fontFamily: "Hammersmith",
-                                  fontSize: 30.sp,
-                                  color: const Color.fromRGBO(238, 81, 83, 1)),
-                            )),
+                        child: Obx(() => Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                                  "${id_device.value}",
+                                  style: TextStyle(
+                                      fontFamily: "Hammersmith",
+                                      fontSize: 30.sp,
+                                      color: const Color.fromRGBO(238, 81, 83, 1)),
+                                ),
+                            Text(
+                                  "Wi-Fi terpilih : ${(_credentials.value['ssid'] != null)? _credentials.value['ssid'] : 'belum terkoneksi'}",
+                                  style: TextStyle(
+                                      fontFamily: "Hammersmith",
+                                      fontSize: 16.sp,
+                                      color: Color.fromARGB(255, 244, 221, 221)),
+                                ),
+                          ],
+                        )),
                       ),
                     ),
                     // Container atas

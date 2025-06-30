@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:retina_app/controller/bluetooth_controller.dart';
+import 'package:retina_app/controller/pref_controller.dart';
 
 class ConnectingScreen extends StatefulWidget {
   const ConnectingScreen({Key? key}) : super(key: key);
@@ -20,10 +21,17 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
   BluetoothConnectionState _currentState =
       BluetoothConnectionState.disconnected;
   var _bleController = Get.put(BLEController());
+  var _prefController = Get.put(PrefController());
 
-  int secondsRemaining = 30;
+  int secondsRemaining = 20;
   Timer? _timer;
 
+  void receiveStatus()async{
+     var services =
+        await _bleController.devices[_bleController.connected_index.value].discoverServices();
+
+    await _bleController.receiveData(services);
+  }  
 
   void startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -33,7 +41,6 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
         });
       } else {
         _timer?.cancel();
-        // Kamu bisa menambahkan aksi setelah hitungan selesai di sini
         print("Waktu habis!");
       }
     });
@@ -42,8 +49,8 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
   @override
   void initState() {
     super.initState();
+    receiveStatus();
     startTimer();
-    // Mulai mendengarkan status koneksi
     connectionStream = _bleController.selected_device!.connectionState;
 
     connectionStream.listen((state) {
@@ -51,11 +58,13 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
         _currentState = state;
       });
 
-      if (state == BluetoothConnectionState.disconnected) {
+      if (state == BluetoothConnectionState.disconnected && _bleController.status_connection_esp!.value == "CN") {
+        if(_bleController.isPermanent.value == true){
+            _prefController.saveWifi(_bleController.ssidWifi.text, _bleController.passWifi.text);
+        }
         Navigator.pushNamedAndRemoveUntil(context, "/wifi_berhasil_screen", (route) => false);
-        print("🔴 Perangkat terputus!");
-        // Lakukan sesuatu, seperti reconnect atau beri notifikasi ke user
-      } else if (state == BluetoothConnectionState.connected && secondsRemaining == 0 ) {
+        print("🔴 Perangkat terputus & berhasil konek!");
+      } else if (state == BluetoothConnectionState.connected && secondsRemaining == 0 && _bleController.status_connection_esp!.value == "NC" ) {
         Navigator.pushNamedAndRemoveUntil(context, "/wifi_gagal_screen", (route) => false);
         
         print("🟢 Perangkat terhubung!");

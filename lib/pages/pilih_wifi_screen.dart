@@ -18,7 +18,7 @@ class PilihWifiScreen extends StatefulWidget {
 
 class _PilihWifiScreenState extends State<PilihWifiScreen> {
   RxBool isVisible = false.obs;
-
+  
   var _wifiController = Get.put(WifiController());
   var _bleController = Get.put(BLEController());
 
@@ -50,8 +50,6 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 60.h, bottom: 10.h),
                   child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Align(
                         alignment: Alignment.topCenter,
@@ -75,7 +73,7 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                                       context,
                                       color:
                                           const Color.fromRGBO(49, 49, 49, 100),
-                                      height: 0.48,
+                                      height: 0.55,
                                       icon: Center(
                                         child: Column(
                                             mainAxisSize: MainAxisSize.max,
@@ -163,6 +161,29 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                                                                         fontSize:
                                                                             14.sp)),
                                                           ),
+                                                          SizedBox(height: 5.h),
+                                                          Obx(() => Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                  value: _bleController.isPermanent
+                                                                      .value,
+                                                                  onChanged:
+                                                                      (bool? b) {
+                                                                    _bleController.isPermanent
+                                                                            .value =
+                                                                        !_bleController.isPermanent
+                                                                            .value;
+                                                                  }),
+                                                              SizedBox(width: 3.w),
+                                                              Text("Gunakan Wi-Fi ini\nseterusnya ?", 
+                                                              style: TextStyle(
+                                                                fontFamily: "Poppins",
+                                                                color: const Color.fromRGBO(49, 49, 49, 100),
+                                                                fontSize: 12.sp
+                                                              ),
+                                                              )    
+                                                            ],
+                                                          ))
                                                         ],
                                                       ),
                                                     ),
@@ -184,7 +205,7 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                                                         style: TextStyle(
                                                           fontFamily: "Poppins",
                                                           fontSize: 14.sp,
-                                                          color: Colors.black,
+                                                          color: Colors.grey,
                                                         ),
                                                       ),
                                                     ),
@@ -207,9 +228,10 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                                                     .then((value) {
                                                   Navigator.pop(context);
                                                   if (value) {
-                                                    Navigator.pushReplacementNamed(
-                                                        context,
-                                                        "/connecting_screen");
+                                                    Navigator
+                                                        .pushReplacementNamed(
+                                                            context,
+                                                            "/connecting_screen");
                                                   } else {
                                                     Navigator
                                                         .pushReplacementNamed(
@@ -275,7 +297,7 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                                               context,
                                               color: const Color.fromRGBO(
                                                   49, 49, 49, 100),
-                                              height: 0.48,
+                                              height: 0.55,
                                               icon: Center(
                                                 child: Column(
                                                     mainAxisSize:
@@ -358,6 +380,29 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                                                                             TextStyle(fontSize: 14.sp)),
                                                               ),
                                                             ),
+                                                          )),
+                                                          SizedBox(height: 5.h),
+                                                          Obx(() => Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                  value: _bleController.isPermanent
+                                                                      .value,
+                                                                  onChanged:
+                                                                      (bool? b) {
+                                                                    _bleController.isPermanent
+                                                                            .value =
+                                                                        !_bleController.isPermanent
+                                                                            .value;
+                                                                  }),
+                                                              SizedBox(width: 3.w),
+                                                              Text("Gunakan Wi-Fi ini\nseterusnya ?", 
+                                                              style: TextStyle(
+                                                                fontFamily: "Poppins",
+                                                                color: const Color.fromRGBO(49, 49, 49, 100),
+                                                                fontSize: 12.sp
+                                                              ),
+                                                              )    
+                                                            ],
                                                           )),
                                                       Padding(
                                                           padding:

@@ -242,10 +242,6 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
               child: Align(
                   alignment: Alignment.bottomCenter,
                   child: ButtonTemplate(context, () async {
-                    // _bleController.devices.clear();
-                    // _bleController.devices_name.clear();
-                    // _bleController.devices_rssi.clear();
-                    // _bleController.devices_id.clear();
                     _bleController.perangkat_detected!.clear();
                     await _BleScanImplement();
                     setState(() {});

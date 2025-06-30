@@ -8,6 +8,9 @@ import 'package:permission_handler/permission_handler.dart';
 class BLEController extends GetxController {
   bool? isSupported;
   RxBool isOn = false.obs;
+  RxBool isPermanent = false.obs;
+  RxString status_connection_esp = "NC".obs;
+
   RxList<dynamic> devices_name = [].obs;
   RxList<dynamic> devices_id = [].obs;
   RxList<dynamic> devices_rssi = [].obs;
@@ -18,10 +21,9 @@ class BLEController extends GetxController {
   BluetoothCharacteristic? targetCharacteristic;
   RxMap<dynamic, dynamic>? perangkat_detected = <dynamic, dynamic>{}.obs;
   BluetoothDevice? selected_device;
-  
+
   var passWifi = TextEditingController();
   var ssidWifi = TextEditingController();
-
 
   @override
   void onInit() {
@@ -56,12 +58,11 @@ class BLEController extends GetxController {
     await Permission.bluetoothConnect.request();
     await Permission.bluetoothScan.request();
 
-    // Cek apakah Bluetooth aktif
     BluetoothAdapterState state = await FlutterBluePlus.adapterState.first;
 
     if (state != BluetoothAdapterState.on) {
       print("🔌 Bluetooth sedang mati. Silakan nyalakan secara manual.");
-      await FlutterBluePlus.turnOn(); 
+      await FlutterBluePlus.turnOn();
     } else {
       print("✅ Bluetooth sudah aktif");
     }
@@ -72,21 +73,26 @@ class BLEController extends GetxController {
     FlutterBluePlus.startScan(
         timeout: Duration(seconds: 10), androidUsesFineLocation: true);
     FlutterBluePlus.setLogLevel(LogLevel.verbose, color: false);
-    var subs = FlutterBluePlus.onScanResults.listen((event) async{
+    var subs = FlutterBluePlus.onScanResults.listen((event) async {
       log("==SCAN==");
       if (event.isNotEmpty) {
         ScanResult r = event.last;
         log('${r.device.remoteId} : "${r.advertisementData}" found!');
         // devices.value.add({"name" : r.advertisementData.localName, "id" : r.device.remoteId.str, "rssi" : r.rssi.toString() });
-        if(!perangkat_detected!.containsKey(r.device.remoteId.str)){
-            perangkat_detected![r.device.remoteId] = {"name" : r.advertisementData.localName, "rssi" : r.rssi.toString(), "devices" : r.device, "id" : r.device.remoteId.str }; 
-        }  
+        if (!perangkat_detected!.containsKey(r.device.remoteId.str)) {
+          perangkat_detected![r.device.remoteId] = {
+            "name": r.advertisementData.localName,
+            "rssi": r.rssi.toString(),
+            "devices": r.device,
+            "id": r.device.remoteId.str
+          };
+        }
 
         devices_name.value.add(r.advertisementData.localName);
         devices_id.value.add(r.device.remoteId.str);
         devices_rssi.value.add(r.rssi.toString());
         devices.value.add(r.device);
-        
+
         devices_name.value = devices_name.value.toSet().toList();
         devices_id.value = devices_id.value.toSet().toList();
         devices_rssi.value = devices_rssi.value.toSet().toList();
@@ -102,8 +108,10 @@ class BLEController extends GetxController {
   /**
    * kirim data ke ESP32
    */
-  Future<bool> sendData(dynamic services, String wifi_name)async {
+  Future<bool> sendData(dynamic services, String wifi_name) async {
     bool send_condition = false;
+    var text;
+
     for (var service in services) {
       for (var characteristic in service.characteristics) {
         if (characteristic.properties.write) {
@@ -114,15 +122,42 @@ class BLEController extends GetxController {
       }
     }
 
-    var text = "${wifi_name},${passWifi.text}";
+    if (isPermanent.value == true) {
+      text = "${wifi_name},${passWifi.text},Y";
+    } else {
+      text = "${wifi_name},${passWifi.text},N";
+    }
+
     if (targetCharacteristic == null) return false;
     final bytes = text.codeUnits;
-    await targetCharacteristic!.write(bytes, withoutResponse: false).then((value) {
+    await targetCharacteristic!
+        .write(bytes, withoutResponse: false)
+        .then((value) {
       send_condition = true;
     });
     log("Terkirim: $text");
     return send_condition;
   }
 
+  /**
+   * receive data dari ESP32
+   */
+  Future<void> receiveData(dynamic services) async {
+   
+    for (var service in services) {
+      for (var characteristic in service.characteristics) {
+        if (characteristic.properties.notify) {
+          await characteristic.setNotifyValue(true);
+          characteristic.value.listen((value) {
+            String status_connection = String.fromCharCodes(value);
+            status_connection_esp!.value = status_connection;
+            log("status : ${status_connection}");
+          });
 
+          targetCharacteristic = characteristic;
+          break;
+        }
+      }
+    }
+  }
 }
