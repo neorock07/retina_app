@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Align(
                         alignment: Alignment.center,
                         child: Text(
-                          "Login ke Akun",
+                          "Masukkan Kode",
                           style: TextStyle(
                             fontFamily: "Hammersmith",
                             fontSize: 18.sp,
@@ -124,24 +124,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       SizedBox(height: 5.h),
-
                       Align(
                         alignment: Alignment.topLeft,
                         child: Material(
                           color: Colors.transparent,
                           child: InkWell(
                             splashColor: Colors.grey,
-                            onTap: () async{
+                            onTap: () async {
                               authController.whatsapp();
                             },
-                            child: Text(
-                                    "Lupa password? Hubungi kami",
-                                    style: TextStyle(
-                                      fontFamily: "Poppins",
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14.sp,
-                                      color: const Color.fromRGBO(227, 29, 29, 1),
-                                    )),
+                            child: Text("Lupa password? Hubungi kami",
+                                style: TextStyle(
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14.sp,
+                                  color: const Color.fromRGBO(227, 29, 29, 1),
+                                )),
                           ),
                         ),
                       ),
@@ -164,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   children: [
                                 TextSpan(
-                                    text: "Register",
+                                    text: " Daftar",
                                     style: TextStyle(
                                       fontFamily: "Poppins",
                                       fontWeight: FontWeight.bold,

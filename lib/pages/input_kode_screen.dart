@@ -47,7 +47,7 @@ class _InputKodeScreenState extends State<InputKodeScreen> {
                       Align(
                         alignment: Alignment.center,
                         child: Text(
-                          "Masukkan Kode",
+                          "Pendaftaran",
                           style: TextStyle(
                             fontFamily: "Hammersmith",
                             fontSize: 18.sp,
@@ -70,7 +70,7 @@ class _InputKodeScreenState extends State<InputKodeScreen> {
                   child: Column(
                     children: [
                       Text(
-                        "Masukkan kode yang tertera di sisi samping perangkat untuk dapat menggunakan perangkat dan buat password.",
+                        "Masukkan kode yang tertera di sisi samping perangkat untuk dapat menggunakan perangkat dan membuat password.",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: "Poppins",
@@ -133,7 +133,7 @@ class _InputKodeScreenState extends State<InputKodeScreen> {
                           },
                           child: RichText(
                               text: TextSpan(
-                                  text: "Sudah punya akun?",
+                                  text: "Sudah punya akun? ",
                                   style: TextStyle(
                                     fontFamily: "Poppins",
                                     fontWeight: FontWeight.bold,
@@ -142,7 +142,7 @@ class _InputKodeScreenState extends State<InputKodeScreen> {
                                   ),
                                   children: [
                                 TextSpan(
-                                    text: "Login",
+                                    text: " Login",
                                     style: TextStyle(
                                       fontFamily: "Poppins",
                                       fontWeight: FontWeight.bold,
@@ -208,7 +208,7 @@ class _InputKodeScreenState extends State<InputKodeScreen> {
                                   }
                                 });
                               },
-                              text: "Konfirmasi",
+                              text: "Daftar",
                               height_percent: 0.07,
                               radius: 50.dm,
                             ),
