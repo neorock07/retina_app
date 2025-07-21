@@ -88,9 +88,12 @@ flutter:
     - assets/image/pilmenu2.png
     - assets/image/pilmenu3.png
     - assets/image/icon_app.png
-    - assets/image/dummy_panduan_1.png
-    - assets/image/dummy_panduan_2.png
-    - assets/image/dummy_panduan_3.png
+    - assets/image/halaman1.png
+    - assets/image/halaman2.png
+    - assets/image/halaman3.png
+    - assets/image/halaman4.png
+    - assets/image/halaman5.png    
+    - assets/image/halaman6.png  
     - assets/image/connecting.gif
   #   - images/a_dot_ham.jpeg
 

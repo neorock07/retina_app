@@ -17,9 +17,12 @@ class PanduanScreen extends StatefulWidget {
 class _PanduanScreenState extends State<PanduanScreen> {
   RxBool isVisible = false.obs;
   var gambarPanduan = [
-    "assets/image/dummy_panduan_1.png",
-    "assets/image/dummy_panduan_2.png",
-    "assets/image/dummy_panduan_3.png"
+    "assets/image/halaman1.png",
+    "assets/image/halaman2.png",
+    "assets/image/halaman3.png",
+    "assets/image/halaman4.png",
+    "assets/image/halaman5.png",
+    "assets/image/halaman6.png"
   ];
   RxInt counter = 0.obs;
   @override
@@ -158,7 +161,7 @@ class _PanduanScreenState extends State<PanduanScreen> {
                             (counter.value == 0)
                                 ? Text("")
                                 : ButtonPanduan(context, () {
-                                    if (counter.value <= 4) {
+                                    if (counter.value <= 7) {
                                       if (counter.value > 0) {
                                         counter.value--;
                                       }
@@ -168,15 +171,15 @@ class _PanduanScreenState extends State<PanduanScreen> {
                                     text: "Kembali",
                                     height_percent: 0.07,
                                     radius: 50.dm),
-                            (counter.value == 0 || counter.value == 3)
+                            (counter.value == 0 || counter.value == 6)
                                 ? Text("")
                                 : SizedBox(
                                     width: 20.w,
                                   ),
-                            (counter.value == 3)
+                            (counter.value == 6)
                                 ? Text("")
                                 : ButtonPanduan(context, () {
-                                    if (counter.value < 3) {
+                                    if (counter.value < 6) {
                                       counter.value++;
                                     }
 
