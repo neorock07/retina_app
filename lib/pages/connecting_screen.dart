@@ -23,7 +23,8 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
   var _bleController = Get.put(BLEController());
   var _prefController = Get.put(PrefController());
 
-  int secondsRemaining = 20;
+  int secondsRemaining = 30;
+  int secondsPlus = 0;
   Timer? _timer;
 
   void receiveStatus()async{
@@ -34,16 +35,22 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
   }  
 
   void startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+
+     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (secondsRemaining > 0) {
+        secondsPlus++;
         setState(() {
           secondsRemaining--;
         });
       } else {
         _timer?.cancel();
         print("Waktu habis!");
+        Navigator.pushNamedAndRemoveUntil(context, "/wifi_gagal_screen", (route) => false);
+        
+        print("Perangkat gagal terhubung!");
       }
     });
+   
   }
 
   @override
@@ -51,25 +58,33 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
     super.initState();
     receiveStatus();
     startTimer();
-    connectionStream = _bleController.selected_device!.connectionState;
-
+     connectionStream = _bleController.selected_device!.connectionState;
+  
     connectionStream.listen((state) {
+      
+      
       setState(() {
         _currentState = state;
       });
+      print("State : ${state}");
+      print("KONEK : ${_bleController.status_connection_esp!.value}");
 
-      if (state == BluetoothConnectionState.disconnected && _bleController.status_connection_esp!.value == "CN") {
+      if (state == BluetoothConnectionState.disconnected && secondsPlus < 20 ) {
         if(_bleController.isPermanent.value == true){
             _prefController.saveWifi(_bleController.ssidWifi.text, _bleController.passWifi.text);
         }
         Navigator.pushNamedAndRemoveUntil(context, "/wifi_berhasil_screen", (route) => false);
         print("🔴 Perangkat terputus & berhasil konek!");
-      } else if (state == BluetoothConnectionState.connected && secondsRemaining == 0 && _bleController.status_connection_esp!.value == "NC" ) {
-        Navigator.pushNamedAndRemoveUntil(context, "/wifi_gagal_screen", (route) => false);
-        
-        print("🟢 Perangkat terhubung!");
       }
     });
+
+  }
+
+  @override
+  void dispose() {
+    secondsRemaining = 25;
+    _timer!.cancel();
+    super.dispose();
   }
 
   @override

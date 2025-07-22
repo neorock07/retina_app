@@ -9,7 +9,7 @@ class BLEController extends GetxController {
   bool? isSupported;
   RxBool isOn = false.obs;
   RxBool isPermanent = false.obs;
-  RxString status_connection_esp = "NC".obs;
+  RxString status_connection_esp = "".obs;
 
   RxList<dynamic> devices_name = [].obs;
   RxList<dynamic> devices_id = [].obs;

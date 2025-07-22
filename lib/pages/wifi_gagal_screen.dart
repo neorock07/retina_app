@@ -67,9 +67,9 @@ class _WifiGagalScreenState extends State<WifiGagalScreen> {
                       height: 20.h,
                     ),
                     ButtonTemplate(context, () {
-                      // Navigator.pushNamed(context, '/menu_screen');
-                      Navigator.pushReplacementNamed(context,
-                          '/pilih_wifi_screen'); //harusnya nanti ke ble_connect
+                      Navigator.pushNamed(context, '/menu_screen');
+                      // Navigator.pushReplacementNamed(context,
+                      //     '/pilih_wifi_screen'); //harusnya nanti ke ble_connect
                     },
                         text: "Sambungkan Ulang",
                         height_percent: 0.07,

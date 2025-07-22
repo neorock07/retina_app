@@ -585,21 +585,6 @@ class _PilihWifiScreenState extends State<PilihWifiScreen> {
                       SizedBox(
                         height: 65.h,
                       ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: EdgeInsets.only(bottom: 10.h),
-                          child: ButtonTemplate(context, () {
-                            Navigator.pushReplacementNamed(
-                                context, '/wifi_berhasil_screen');
-                            // Navigator.pushReplacementNamed(
-                            //     context, '/pilih_wifi_screen');
-                          },
-                              text: "Connect",
-                              height_percent: 0.07,
-                              radius: 50.dm),
-                        ),
-                      )
                     ],
                   ),
                 ),

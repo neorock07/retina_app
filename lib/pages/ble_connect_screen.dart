@@ -27,8 +27,11 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
     await _bleController.Ble_scan();
   }
 
-  Function? _onError(){
-    DialogPop(context, icon: Center(child: Text("Gagal menghubungkan!"),));
+  Function? _onError() {
+    DialogPop(context,
+        icon: Center(
+          child: Text("Gagal menghubungkan!"),
+        ));
   }
 
   @override
@@ -76,7 +79,7 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
             Center(
                 child: Obx(
               () => (_bleController.perangkat_detected!.isEmpty)
-              // () => (_bleController.devices_name.value.isEmpty)
+                  // () => (_bleController.devices_name.value.isEmpty)
                   ? CircularProgressIndicator(
                       color: Colors.red,
                       strokeWidth: 4.w,
@@ -89,7 +92,9 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
                           itemCount: _bleController.perangkat_detected!.length,
                           // itemCount: _bleController.devices_name.length,
                           itemBuilder: (_, index) {
-                            var list_perangkat = _bleController.perangkat_detected!.values.toList();
+                            var list_perangkat = _bleController
+                                .perangkat_detected!.values
+                                .toList();
 
                             return Padding(
                               padding: EdgeInsets.only(top: 5.h),
@@ -174,43 +179,58 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
                                           ),
                                         ],
                                       ),
-                                      Obx(() => (_isPressed.value == true && _selected_index.value == index)?
-                                        const CircularProgressIndicator(color: Colors.red,)
-                                        :
-                                        ButtonConnect(context,
-                                              () async {
-                                            // var subs = _bleController.devices
-                                            //     .value[index].connectionState
-                                            _isPressed.value = true;
-                                            _selected_index.value = index;
-                                             var subs = list_perangkat[index]['devices']
-                                                .connectionState   
-                                                .listen((event) async {
-                                              if (event ==
-                                                  BluetoothConnectionState
-                                                      .disconnected) {
-                                                log("${list_perangkat[index]['devices'].disconnectReason?.code} ${list_perangkat[index]['devices'].disconnectReason?.description}");
-                                                // log("${_bleController.devices.value[index].disconnectReason?.code} ${_bleController.devices.value[index].disconnectReason?.description}");
-                                                _bleController.selected_device = list_perangkat[index]['devices']; 
-                                                await list_perangkat[index]['devices']
-                                                    .connect(
-                                                        timeout: const Duration(
-                                                            seconds: 15))
-                                                    .then(
-                                                      (value) {
-                                                        _isPressed.value = false;
+                                      Obx(() => (_isPressed.value == true &&
+                                              _selected_index.value == index)
+                                          ? const CircularProgressIndicator(
+                                              color: Colors.red,
+                                            )
+                                          : ButtonConnect(context, () async {
+                                              // var subs = _bleController.devices
+                                              //     .value[index].connectionState
+                                              _isPressed.value = true;
+                                              _selected_index.value = index;
+                                              var subs = list_perangkat[index]
+                                                      ['devices']
+                                                  .connectionState
+                                                  .listen((event) async {
+                                                if (event ==
+                                                    BluetoothConnectionState
+                                                        .disconnected) {
+                                                  log("${list_perangkat[index]['devices'].disconnectReason?.code} ${list_perangkat[index]['devices'].disconnectReason?.description}");
+                                                  // log("${_bleController.devices.value[index].disconnectReason?.code} ${_bleController.devices.value[index].disconnectReason?.description}");
                                                   _bleController
-                                                      .isConnected.value = true;
-                                                  _bleController.connected_index
-                                                      .value = index;
+                                                          .selected_device =
+                                                      list_perangkat[index]
+                                                          ['devices'];
+                                                  await list_perangkat[index]
+                                                          ['devices']
+                                                      .connect(
+                                                          timeout:
+                                                              const Duration(
+                                                                  seconds: 15))
+                                                      .then(
+                                                    (value) {
+                                                      _isPressed.value = false;
+                                                      _bleController.isConnected
+                                                          .value = true;
+                                                      _bleController
+                                                          .connected_index
+                                                          .value = index;
 
-                                                  Navigator.pushNamedAndRemoveUntil(context, "/pilih_wifi_screen", (route) => false);    
-                                                },
-                                                
-                                                );
-                                              }
-                                            });
-                                          },
+                                                      Navigator
+                                                          .pushNamedAndRemoveUntil(
+                                                              context,
+                                                              "/pilih_wifi_screen",
+                                                              (route) =>
+                                                                  false).then(
+                                                          (value) {
+                                                        list_perangkat.clear();
+                                                      });
+                                                    },
+                                                  );
+                                                }
+                                              });
+                                            },
                                               text: (_bleController
                                                           .isConnected.value &&
                                                       index ==
@@ -237,16 +257,18 @@ class _BleConnectScreenState extends State<BleConnectScreen> {
                           }),
                     ),
             )),
-            Padding(
-              padding: EdgeInsets.only(bottom: 20.h),
-              child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: ButtonTemplate(context, () async {
-                    _bleController.perangkat_detected!.clear();
-                    await _BleScanImplement();
-                    setState(() {});
-                  }, text: "SCAN", height_percent: 0.07, radius: 50.dm)),
-            )
+            StatefulBuilder(builder: (ctx, _) {
+              return Padding(
+                padding: EdgeInsets.only(bottom: 20.h),
+                child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ButtonTemplate(context, () async {
+                      _bleController.perangkat_detected!.clear();
+                      await _BleScanImplement();
+                      setState(() {});
+                    }, text: "SCAN", height_percent: 0.07, radius: 50.dm)),
+              );
+            })
           ],
         ),
       ),
